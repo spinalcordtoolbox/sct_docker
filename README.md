@@ -1,6 +1,4 @@
-## SCT on windows
-
-# sct_docker
+# run SCT on windows
 An SCT  with ssh Dockerfile  
 To build the container: 
 docker build --tag neuropoly/sct .
