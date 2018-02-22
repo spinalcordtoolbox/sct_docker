@@ -4,7 +4,7 @@
 /etc/init.d/ssh start
 status=$?
 if [ $status -ne 0 ]; then
-  echo "Failed to start my_second_process: $status"
+  echo "Failed to start sshd: $status"
   exit $status
 fi
 
