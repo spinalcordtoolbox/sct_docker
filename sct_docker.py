@@ -4,8 +4,12 @@
 import sys, io, os, logging, time, datetime, shutil
 
 
-def generate(distro="debian:7", version="3.1.1"):
+def generate(distro="debian:7", version="3.1.1", commands=None, name=None):
 	"""
+	:param distro: Distribution (Docker specification)
+	:param version: SCT version
+	:param commands: Commands to run as part of build
+	:returns: name
 	"""
 
 	frag = """
@@ -53,23 +57,34 @@ EXPOSE 22
 	""".strip()
 
 	if version in ("3.1.1", "3.1.0"):
+		sct_dir = "/home/sct_{}".format(version)
 		frag += "\n" + """
 RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/v{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}
-#RUN echo export PATH+=":~/sct_{version}/bin" >> ~/.bashrc
-#WORKDIR /home/sct/sct_{version}
-#RUN echo $PATH TODO NG
 		""".strip().format(**locals())
 	else:
+		sct_dir = "/home/sct_dev"
 		frag += "\n" + """
-RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}
-RUN echo export PATH+=":~/sct_dev/bin" >>~/.bashrc
-#RUN . ~/.bashrc; sct_download_data -d sct_example_data
+RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version}* && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}*
 		""".strip().format(**locals())
+
+	frag += "\n" + """
+ENV SCT_DIR {sct_dir}
+	""".strip().format(**locals())
 
 	frag += "\n" + """
 
 # Get sct_example_data for offline use
-RUN sct_download_data -d sct_example_data
+RUN bash -i -c "sct_download_data -d sct_example_data"
+
+# Get sct_testing_data for offline use
+RUN bash -i -c "sct_download_data -d sct_testing_data"
+
+	""".strip()
+
+	if commands is not None:
+		frag += "\n" + "\n".join(["""RUN bash -i -c '{}'""".format(command) for command in commands])
+
+	frag += "\n" + """
 
 # QC connection
 EXPOSE 8888
@@ -81,7 +96,9 @@ RUN echo  X11UseLocalhost no | sudo tee --append /etc/ssh/sshd_config
 ENTRYPOINT bash -c 'sudo /usr/sbin/sshd; /bin/bash'
 	""".strip()
 
-	name = "sct-%s-%s" % (distro.replace(":", "-"), version)
+	if name is None:
+		name = "sct-%s-%s" % (distro.replace(":", "-"), version)
+
 	if not os.path.exists(name):
 		os.makedirs(name)
 	with io.open(os.path.join(name, "Dockerfile"), "w") as f:
@@ -134,6 +151,6 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	if args.command == "generate":
-		res = generate(distro=args.distro, version=args.version)
-		print(res)
+		name = generate(distro=args.distro, version=args.version)
+		print(name)
 
