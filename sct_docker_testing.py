@@ -6,6 +6,17 @@ import sys, io, os, logging, time, datetime, shutil, datetime, subprocess
 
 import sct_docker
 
+
+if sys.hexversion < 0x03030000:
+    import pipes
+    def list2cmdline(lst):
+        return " ".join(pipes.quote(x) for x in lst)
+else:
+    import shlex
+    def list2cmdline(lst):
+        return " ".join(shlex.quote(x) for x in lst)
+
+
 default_distros = (
  "ubuntu:16.04",
 )
@@ -13,11 +24,11 @@ default_distros = (
 default_version = "master"
 
 default_commands = [
- "sct_testing -d 0",
- "${SCT_DIR}/batch_processing.sh -nodownload",
+ "MPLBACKEND=Agg sct_testing -d 0",
+ "MPLBACKEND=Agg ${SCT_DIR}/batch_processing.sh -nodownload",
 ]
 
-def run_test(distros=None, version=None, commands=None):
+def run_test(distros=None, version=None, commands=None, jobs=None):
 	"""
 	"""
 
@@ -34,17 +45,41 @@ def run_test(distros=None, version=None, commands=None):
 	for distro in distros:
 		name = "sct-testing-{}-{}-{}".format(distro.replace(":", "-"), version, datetime.datetime.now().strftime("%Y%m%d%H%M%S")).lower()
 
-		name = sct_docker.generate(distro=distro, version=version, commands=commands, name=name)
+		name = sct_docker.generate(distro=distro, version=version, commands=commands,
+		 name=name, configure_ssh=False)
 
 		names.append(name)
 
+
+	from multiprocessing.pool import ThreadPool
+	pool = ThreadPool(jobs)
+
+	res = list()
 	for name in names:
+
 		cmd = [
 		 "docker", "build", "-t", name, name,
 		]
-		print(cmd)
-		subprocess.call(cmd)
 
+		promise = pool.apply_async(lambda x: subprocess.call(x), (cmd,))
+		res.append(promise)
+
+	errs = list()
+	for name, promise in zip(names, res):
+		err = promise.get()
+		if err != 0:
+			logging.error("{} failed with error code {}".format(name, err))
+		errs.append(err)
+
+	pool.close()
+	x = pool.join()
+
+	for name, err in zip(names, errs):
+		if err == 0:
+			logging.info("{} finished successfully".format(name))
+		else:
+			logging.error("{} failed with error code {}".format(name, err))
+	print(errs)
 
 if __name__ == "__main__":
 
@@ -79,6 +114,11 @@ if __name__ == "__main__":
 	 default=default_version,
 	)
 
+	subp.add_argument("--jobs",
+	 type=int,
+	 default=None,
+	)
+
 	subp.add_argument("--commands",
 	 nargs="+",
 	 default=default_commands,
@@ -93,5 +133,5 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	if args.command == "test":
-		res = run_test(distros=args.distros, version=args.version)
+		res = run_test(distros=args.distros, version=args.version, jobs=args.jobs)
 
