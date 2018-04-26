@@ -43,7 +43,7 @@ RUN yum install -y xorg-x11-twm xorg-x11-xauth
 RUN yum install -y openssh-server
 
 # For SCT
-RUN yum install -y procps
+RUN yum install -y procps findutils
 RUN yum search libstdc
 RUN yum install -y compat-libstdc++-33 libstdc++
 	""".strip()
@@ -62,7 +62,7 @@ RUN dnf install -y xorg-x11-twm xorg-x11-xauth
 RUN dnf install -y openssh-server
 
 # For SCT
-RUN dnf install -y procps
+RUN dnf install -y procps findutils
 RUN yum search libstdc
 RUN dnf install -y compat-libstdc++-33 libstdc++
 	""".strip()
@@ -95,10 +95,8 @@ ENV SCT_DIR {sct_dir}
 
 	frag += "\n" + """
 
-# Get sct_example_data for offline use
+# Get data for offline use
 RUN bash -i -c "sct_download_data -d sct_example_data"
-
-# Get sct_testing_data for offline use
 RUN bash -i -c "sct_download_data -d sct_testing_data"
 
 	""".strip()
@@ -126,6 +124,7 @@ ENTRYPOINT bash -c 'sudo /usr/sbin/sshd; /bin/bash'
 	frag += "\n" + """
 RUN echo Finished
 	""".strip()
+
 
 	if name is None:
 		name = "sct-%s-%s" % (distro.replace(":", "-"), version)
