@@ -4,7 +4,7 @@
 import sys, io, os, logging, time, datetime, shutil
 
 
-def generate(distro="debian:7", version="3.1.1", commands=None, name=None):
+def generate(distro="debian:7", version="3.1.1", commands=None, name=None, configure_ssh=True):
 	"""
 	:param distro: Distribution (Docker specification)
 	:param version: SCT version
@@ -29,9 +29,29 @@ RUN apt-get install -y xorg
 RUN apt-get install -y openssh-server
 	""".strip()
 
-	if distro.startswith(("fedora", "centos")):
+	elif distro in ("centos:6", "centos:7",):
+		frag += "\n" + """
+RUN yum update -y
+
+RUN yum install -y curl sudo
+
+# For conda
+RUN yum install -y bzip2
+
+# For remote GUI access
+RUN yum install -y xorg-x11-twm xorg-x11-xauth
+RUN yum install -y openssh-server
+
+# For SCT
+RUN yum install -y procps
+RUN yum search libstdc
+RUN yum install -y compat-libstdc++-33 libstdc++
+	""".strip()
+
+	elif distro.startswith(("fedora", "centos")):
 		frag += "\n" + """
 RUN dnf update -y
+
 RUN dnf install -y curl sudo
 
 # For conda
@@ -43,6 +63,8 @@ RUN dnf install -y openssh-server
 
 # For SCT
 RUN dnf install -y procps
+RUN yum search libstdc
+RUN dnf install -y compat-libstdc++-33 libstdc++
 	""".strip()
 
 
@@ -84,16 +106,25 @@ RUN bash -i -c "sct_download_data -d sct_testing_data"
 	if commands is not None:
 		frag += "\n" + "\n".join(["""RUN bash -i -c '{}'""".format(command) for command in commands])
 
-	frag += "\n" + """
+	if configure_ssh:
+
+		if not distro.startswith(("ubuntu", "debian")):
+			frag += "\n" + """
+RUN yes '' | sudo ssh-keygen -q -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+			""".strip()
+
+		frag += "\n" + """
 
 # QC connection
 EXPOSE 8888
 
-RUN yes '' | sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
-
 RUN echo  X11UseLocalhost no | sudo tee --append /etc/ssh/sshd_config
 
 ENTRYPOINT bash -c 'sudo /usr/sbin/sshd; /bin/bash'
+		""".strip()
+
+	frag += "\n" + """
+RUN echo Finished
 	""".strip()
 
 	if name is None:
