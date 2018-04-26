@@ -133,5 +133,6 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	if args.command == "test":
-		res = run_test(distros=args.distros, version=args.version, jobs=args.jobs)
+		res = run_test(distros=args.distros, version=args.version,
+		 commands=args.commands, jobs=args.jobs)
 
