@@ -86,52 +86,26 @@ Usage
       sct_check_dependencies
 
 
-Generation
-**********
+Generation and Distribution
+***************************
 
-Supported distributions:
+The tool `sct_docker_images.py` helps with creation and distribution
+of SCT Docker images.
 
-.. code:: sh
-
-   distros="debian:7 debian:8 debian:9 ubuntu:14.04 ubuntu:16.04 ubuntu:18.04 fedora:27"
-   version="3.1.1"
-   install_folder="sct_$version"
-
-
-Creation of container images:
+Example: creation of container images:
 
 .. code:: sh
 
-   > containers.lst
-   for distro in $distros; do
-     ./sct_docker.py generate --distro $distro >> containers.lst
-   done
+   ./sct_docker_images.py generate
 
-   containers=$(< containers.lst)
-   for container in $containers; do
-    docker build -t $container $container; \
-   done
-
-Example of distribution:
+Example: creation of offline archive tarball:
 
 .. code:: sh
 
-   for container in $containers; do
-     docker tag $container zougloub/neuropoly:$container;
-     docker push zougloub/neuropoly:$container;
-   done
+   ./sct_docker_images.py generate --generate-offline-sct-distro
 
-Creation of offline archives:
+Example: creation and distribution:
 
 .. code:: sh
 
-   containers=$(< containers.lst)
-   for container in $containers; do
-     docker run "$container" tar --create $install_folder \
-      | gzip \
-      > offline-archive-${container}.tar.gz
-   done
-
-
-
-
+   ./sct_docker_images.py generate --publish-under zougloub/neuropoly
