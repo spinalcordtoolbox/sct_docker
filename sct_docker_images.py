@@ -21,7 +21,7 @@ default_distros = (
  "ubuntu:14.04",
  "ubuntu:16.04",
  "ubuntu:18.04",
- "debian:7",
+ #"debian:7" # has issues with fsleyes
  "debian:8",
  "debian:9",
  "fedora:25",
@@ -30,6 +30,9 @@ default_distros = (
 )
 
 default_version = "master"
+
+default_commands = (
+)
 
 def generate(distros=None, version=None, jobs=None, publish_under=None, generate_offline_sct_distro=False):
 	"""
@@ -46,7 +49,11 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 		name = "sct-{}-{}".format(version, distro.replace(":", "-")).lower()
 
 		name = sct_docker.generate(distro=distro, version=version,
-		 name=name, configure_ssh=True)
+		 name=name, commands=default_commands,
+		 install_fsleyes=True,
+		 #install_fsl=True,
+		 configure_ssh=True,
+		)
 
 		names.append(name)
 
@@ -54,25 +61,30 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 	from multiprocessing.pool import ThreadPool
 	pool = ThreadPool(jobs)
 
-	res = list()
-	for name in names:
+	try:
+		res = list()
+		for name in names:
 
-		cmd = [
-		 "docker", "build", "-t", name, name,
-		]
+			cmd = [
+			 "docker", "build", "-t", name, name,
+			]
 
-		promise = pool.apply_async(lambda x: subprocess.call(x), (cmd,))
-		res.append(promise)
+			promise = pool.apply_async(lambda x: subprocess.call(x), (cmd,))
+			res.append(promise)
 
-	errs = list()
-	for name, promise in zip(names, res):
-		err = promise.get()
-		if err != 0:
-			logging.error("{} failed with error code {}".format(name, err))
-		errs.append(err)
+		errs = list()
+		for name, promise in zip(names, res):
+			err = promise.get()
+			if err != 0:
+				logging.error("{} failed with error code {}".format(name, err))
+			errs.append(err)
 
-	pool.close()
-	x = pool.join()
+		pool.close()
+	except BaseException as e:
+		print("Keyboard interrupt")
+		pool.terminate()
+		raise SystemExit(1)
+	pool.join()
 
 	failed = False
 	for name, err in zip(names, errs):
@@ -96,7 +108,8 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 
 	if generate_offline_sct_distro:
 		for name in names:
-			cmd = ["bash", "-c", "docker run {} tar --directory=/home/sct --create . | gzip > offline-archive-{}.tar.gz".format(name, name)]
+			cmd = ["bash", "-c", "docker run {} tar --directory=/home/sct --create ." \
+			 " | gzip > offline-archive-{}.tar.gz".format(name, name)]
 			subprocess.call(cmd)
 
 
