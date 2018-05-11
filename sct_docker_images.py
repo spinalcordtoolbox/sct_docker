@@ -8,14 +8,17 @@ import sct_docker
 
 
 if sys.hexversion < 0x03030000:
-    import pipes
-    def list2cmdline(lst):
-        return " ".join(pipes.quote(x) for x in lst)
+	import pipes
+	def list2cmdline(lst):
+		return " ".join(pipes.quote(x) for x in lst)
 else:
-    import shlex
-    def list2cmdline(lst):
-        return " ".join(shlex.quote(x) for x in lst)
+	import shlex
+	def list2cmdline(lst):
+		return " ".join(shlex.quote(x) for x in lst)
 
+def printf(x):
+	sys.stdout.write(x)
+	sys.stdout.flush()
 
 default_distros = (
  "ubuntu:14.04",
@@ -27,6 +30,7 @@ default_distros = (
  "fedora:25",
  "fedora:26",
  "fedora:27",
+ "centos:7",
 )
 
 default_version = "master"
@@ -100,17 +104,25 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 		return 1
 
 	if publish_under:
+		print("Publishing on Docker hub")
 		for name in names:
+			printf("- %s..." % name)
 			cmd = ["docker", "tag", name, "{}:{}".format(publish_under, name)]
 			subprocess.call(cmd)
 			cmd = ["docker", "push", "{}:{}".format(publish_under, name)]
 			subprocess.call(cmd)
+			print("")
+		print("Done publishing")
 
 	if generate_offline_sct_distro:
+		print("Generating offline archives")
 		for name in names:
-			cmd = ["bash", "-c", "docker run {} tar --directory=/home/sct --create ." \
-			 " | gzip > offline-archive-{}.tar.gz".format(name, name)]
+			printf("- %s..." % name)
+			cmd = ["bash", "-c", "docker run --entrypoint /bin/sh {} -c 'cd /home/sct; tar c .'" \
+			 " | xz --threads=0 --best > offline-archive-{}.tar.xz".format(name, name)]
 			subprocess.call(cmd)
+			print("")
+		print("Done generating offline archives")
 
 
 if __name__ == "__main__":

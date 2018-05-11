@@ -45,7 +45,7 @@ RUN yum install -y xorg-x11-twm xorg-x11-xauth
 RUN yum install -y openssh-server
 
 # For SCT
-RUN yum install -y procps findutils
+RUN yum install -y procps findutils which
 RUN yum search libstdc
 RUN yum install -y compat-libstdc++-33 libstdc++
 	""".strip()
@@ -65,7 +65,7 @@ RUN dnf install -y openssh-server
 
 # For SCT
 RUN dnf install -y procps findutils which
-RUN yum search libstdc
+RUN dnf search libstdc
 RUN dnf install -y compat-libstdc++-33 libstdc++
 	""".strip()
 
@@ -111,9 +111,15 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y build-essential
 			""".strip()
 
-		elif distro.startswith(("fedora", "centos")):
+		elif distro.startswith("fedora"):
 			frag += "\n" + """
+# sudo dnf groupinstall -y "Development Tools"
 RUN sudo dnf install -y redhat-rpm-config gcc "gcc-c++"
+			""".strip()
+
+		elif distro.startswith("centos"):
+			frag += "\n" + """
+RUN sudo yum install -y redhat-rpm-config gcc "gcc-c++" make
 			""".strip()
 
 	if install_fsleyes:
@@ -147,7 +153,7 @@ RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
 
 		elif distro.startswith("centos"):
 			frag += "\n" + """
-RUN sudo yum install -y gtkmm30-devel gtkglext-devel
+RUN sudo yum install -y gtkmm30-devel gtkglext-devel freeglut-devel
 RUN sudo yum install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo yum install -y webkitgtk3-devel webkitgtk-devel
 			""".strip()
