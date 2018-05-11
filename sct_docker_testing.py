@@ -18,7 +18,17 @@ else:
 
 
 default_distros = (
+ "ubuntu:14.04",
  "ubuntu:16.04",
+ "ubuntu:18.04",
+ "debian:7",
+ "debian:8",
+ "debian:9",
+ "fedora:25",
+ "fedora:26",
+ "fedora:27",
+ #"centos:6", #https://github.com/neuropoly/spinalcordtoolbox/issues/1704
+ "centos:7",
 )
 
 default_version = "master"

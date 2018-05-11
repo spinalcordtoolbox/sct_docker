@@ -138,17 +138,28 @@ RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo dnf install -y webkitgtk4-devel
 			""".strip()
 
-		elif distro.startswith(("fedora", "centos")):
+		elif distro.startswith("fedora"):
 			frag += "\n" + """
 RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
 RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
 			""".strip()
 
+		elif distro.startswith("centos"):
+			frag += "\n" + """
+RUN sudo yum install -y gtkmm30-devel gtkglext-devel
+RUN sudo yum install -y gstreamer1-devel gstreamer1-plugins-base-devel
+RUN sudo yum install -y webkitgtk3-devel webkitgtk-devel
+			""".strip()
+
 	if install_fsl:
-		if distro.startswith(("centos","fedora")):
+		if distro.startswith("fedora"):
 			frag += "\n" + """
 RUN sudo dnf install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
+			""".strip()
+		elif distro.startswith("centos"):
+			frag += "\n" + """
+RUN sudo yum install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
 			""".strip()
 		elif distro.startswith(("ubuntu", "debian")):
 			frag += "\n" + """
