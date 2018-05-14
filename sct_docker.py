@@ -6,7 +6,11 @@ import sys, io, os, logging, time, datetime, shutil
 
 def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
  install_compilers=False,
- install_fsleyes=False, install_fsl=False, configure_ssh=True):
+ install_fsleyes=False,
+ install_fsl=False,
+ configure_ssh=True,
+ verbose=True,
+ ):
 	"""
 	:param distro: Distribution (Docker specification)
 	:param version: SCT version
@@ -69,39 +73,6 @@ RUN dnf search libstdc
 RUN dnf install -y compat-libstdc++-33 libstdc++
 	""".strip()
 
-
-
-	frag += "\n" + """
-RUN useradd -ms /bin/bash sct
-RUN echo "sct ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-RUN echo "sct:sct" | chpasswd
-USER sct
-ENV HOME /home/sct
-WORKDIR /home/sct
-EXPOSE 22
-	""".strip()
-
-
-	if version in ("3.1.1", "3.1.0"):
-		sct_dir = "/home/sct/sct_{}".format(version)
-		frag += "\n" + """
-RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/v{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}
-		""".strip().format(**locals())
-	else:
-		sct_dir = "/home/sct/sct_dev"
-		frag += "\n" + """
-RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version}* && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}*
-		""".strip().format(**locals())
-
-	frag += "\n" + """
-ENV SCT_DIR {sct_dir}
-	""".strip().format(**locals())
-
-	frag += "\n" + """
-# Get data for offline use
-RUN bash -i -c "sct_download_data -d sct_example_data"
-RUN bash -i -c "sct_download_data -d sct_testing_data"
-	""".strip()
 
 
 	if install_fsleyes or install_fsl or install_compilers:
@@ -172,6 +143,38 @@ RUN sudo yum install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
 RUN sudo apt-get install -y libexpat1-dev libx11-dev zlib1g-dev libgl1-mesa-dev
 			""".strip()
 
+	frag += "\n" + """
+RUN useradd -ms /bin/bash sct
+RUN echo "sct ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "sct:sct" | chpasswd
+USER sct
+ENV HOME /home/sct
+WORKDIR /home/sct
+EXPOSE 22
+	""".strip()
+
+
+	if version in ("3.1.1", "3.1.0"):
+		sct_dir = "/home/sct/sct_{}".format(version)
+		frag += "\n" + """
+RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/v{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}
+		""".strip().format(**locals())
+	else:
+		sct_dir = "/home/sct/sct_dev"
+		frag += "\n" + """
+RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version}* && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}*
+		""".strip().format(**locals())
+
+	frag += "\n" + """
+ENV SCT_DIR {sct_dir}
+	""".strip().format(**locals())
+
+	frag += "\n" + """
+# Get data for offline use
+RUN bash -i -c "sct_download_data -d sct_example_data"
+RUN bash -i -c "sct_download_data -d sct_testing_data"
+	""".strip()
+
 	if install_fsleyes:
 		frag += "\n" + """
 RUN bash -i -c "$SCT_DIR/python/bin/pip install fsleyes"
@@ -233,7 +236,8 @@ RUN echo Finished
 	with io.open(os.path.join(name, "Dockerfile"), "w") as f:
 		f.write(frag)
 
-	logging.info("You can now run: docker build -t %s %s", name, name)
+	if verbose:
+		logging.info("You can now run: docker build -t %s %s", name, name)
 
 	return name
 

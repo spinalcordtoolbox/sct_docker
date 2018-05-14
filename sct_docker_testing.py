@@ -56,7 +56,9 @@ def run_test(distros=None, version=None, commands=None, jobs=None):
 		name = "sct-testing-{}-{}-{}".format(distro.replace(":", "-"), version, datetime.datetime.now().strftime("%Y%m%d%H%M%S")).lower()
 
 		name = sct_docker.generate(distro=distro, version=version, commands=commands,
-		 name=name, configure_ssh=False)
+		 name=name, configure_ssh=False,
+		 verbose=False,
+		)
 
 		names.append(name)
 

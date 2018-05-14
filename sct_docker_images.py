@@ -48,20 +48,26 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 	if version is None:
 		version = default_version
 
+	print("Generating distro Dockerfiles")
 	names = []
 	for distro in distros:
 		name = "sct-{}-{}".format(version, distro.replace(":", "-")).lower()
+		printf("- %s..." % name)
 
 		name = sct_docker.generate(distro=distro, version=version,
 		 name=name, commands=default_commands,
 		 install_fsleyes=True,
 		 #install_fsl=True,
 		 configure_ssh=True,
+		 verbose=False,
 		)
 
 		names.append(name)
+		print("")
+	print("Done generating distro Dockerfiles")
 
 
+	print("Building images")
 	from multiprocessing.pool import ThreadPool
 	pool = ThreadPool(jobs)
 
@@ -89,6 +95,7 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 		pool.terminate()
 		raise SystemExit(1)
 	pool.join()
+	print("Done building images")
 
 	failed = False
 	for name, err in zip(names, errs):
@@ -118,7 +125,7 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 		print("Generating offline archives")
 		for name in names:
 			printf("- %s..." % name)
-			cmd = ["bash", "-c", "docker run --entrypoint /bin/sh {} -c 'cd /home/sct; tar c .'" \
+			cmd = ["bash", "-c", "docker run --log-driver=none --entrypoint /bin/sh {} -c 'cd /home/sct; tar c .'" \
 			 " | xz --threads=0 --best > offline-archive-{}.tar.xz".format(name, name)]
 			subprocess.call(cmd)
 			print("")
