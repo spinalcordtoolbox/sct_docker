@@ -38,7 +38,12 @@ default_version = "master"
 default_commands = (
 )
 
-def generate(distros=None, version=None, jobs=None, publish_under=None, generate_offline_sct_distro=False):
+def generate(distros=None, version=None,
+ jobs=None,
+ publish_under=None,
+ generate_docker_tarball=False,
+ generate_distro_specific_sct_tarball=False,
+ ):
 	"""
 	"""
 
@@ -121,12 +126,22 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 			print("")
 		print("Done publishing")
 
+	if generate_docker_tarball:
+		print("Generating Docker tarballs")
+		for name in names:
+			printf("- %s..." % name)
+			cmd = ["bash", "-c", "docker save {}" \
+			 " | xz --threads=0 --best > {}-docker.tar.xz".format(name, name)]
+			subprocess.call(cmd)
+			print("")
+		print("Done generating Docker tarballs")
+
 	if generate_offline_sct_distro:
 		print("Generating offline archives")
 		for name in names:
 			printf("- %s..." % name)
 			cmd = ["bash", "-c", "docker run --log-driver=none --entrypoint /bin/sh {} -c 'cd /home/sct; tar c sct_*'" \
-			 " | xz --threads=0 --best > offline-archive-{}.tar.xz".format(name, name)]
+			 " | xz --threads=0 --best > {}-offline.tar.xz".format(name, name)]
 			subprocess.call(cmd)
 			print("")
 		print("Done generating offline archives")
@@ -170,7 +185,12 @@ if __name__ == "__main__":
 	 default=None,
 	)
 
-	subp.add_argument("--generate-offline-sct-distro",
+	subp.add_argument("--generate-docker-tarball",
+	 action="store_true",
+	 default=False,
+	)
+
+	subp.add_argument("--generate-distro-specific-sct-tarball",
 	 action="store_true",
 	 default=False,
 	)
@@ -189,7 +209,8 @@ if __name__ == "__main__":
 
 	if args.command == "generate":
 		res = generate(distros=args.distros, version=args.version,
-		 generate_offline_sct_distro=args.generate_offline_sct_distro,
+		 generate_docker_tarball=args.generate_docker_tarball,
+		 generate_distro_specific_sct_tarball=args.generate_distro_specific_sct_tarball,
 		 publish_under=args.publish_under,
 		 jobs=args.jobs)
 		raise SystemExit(res)
