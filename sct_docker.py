@@ -22,6 +22,10 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
 FROM {distro}
 	""".strip().format(**locals())
 
+	if "/" in distro:
+		orga, distro = distro.split("/")
+		distro = "%s@%s" % (distro, orga)
+
 	if distro.startswith(("debian", "ubuntu")):
 		frag += "\n" + """
 RUN apt-get update
