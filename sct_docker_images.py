@@ -125,7 +125,7 @@ def generate(distros=None, version=None, jobs=None, publish_under=None, generate
 		print("Generating offline archives")
 		for name in names:
 			printf("- %s..." % name)
-			cmd = ["bash", "-c", "docker run --log-driver=none --entrypoint /bin/sh {} -c 'cd /home/sct; tar c .'" \
+			cmd = ["bash", "-c", "docker run --log-driver=none --entrypoint /bin/sh {} -c 'cd /home/sct; tar c sct_*'" \
 			 " | xz --threads=0 --best > offline-archive-{}.tar.xz".format(name, name)]
 			subprocess.call(cmd)
 			print("")
