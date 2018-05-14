@@ -136,7 +136,7 @@ def generate(distros=None, version=None,
 			print("")
 		print("Done generating Docker tarballs")
 
-	if generate_offline_sct_distro:
+	if generate_distro_specific_sct_tarball:
 		print("Generating offline archives")
 		for name in names:
 			printf("- %s..." % name)
