@@ -65,19 +65,19 @@ Offline Archives
 Usage
 *****
 
-#. Extract archive:
+#. Extract archive in `/home/sct` (unfortunately due to hard-coded paths in the
+installation folder, this is mandatory):
 
    .. code:: sh
 
       cd $HOME
-      tar xzf /path/to/offline-archive-sct-ubuntu_16_04-sct3.1.1.tar.gz
-
+      tar xf /path/to/sct-sct3.1.1-ubuntu_16_04-offline.tar.xz
 
 #. Add PATH:
 
    .. code:: sh
 
-      PATH+=":$HOME/sct_3.1.1/bin"
+      PATH+=":/home/sct/sct_3.1.1/bin"
 
 #. Use it!
 
