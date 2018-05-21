@@ -20,6 +20,8 @@ default_distros = (
  "centos:7",
 )
 
+official_distro = "ubuntu:18.04"
+
 default_version = "master"
 
 default_commands = (
@@ -55,6 +57,21 @@ def generate(distros=None, version=None,
 		)
 
 		names.append(name)
+
+		if distro == official_distro:
+			name = "sct-{}-{}".format(version, "official").lower()
+			printf("- %s..." % name)
+
+			name = sct_docker.generate(distro=distro, version=version,
+			 name=name, commands=default_commands,
+			 install_fsleyes=True,
+			 #install_fsl=True,
+			 configure_ssh=True,
+			 verbose=False,
+			)
+
+			names.append(name)
+
 		print("")
 	print("Done generating distro Dockerfiles")
 
