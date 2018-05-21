@@ -184,16 +184,26 @@ Example: creation of container images:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate
+   ./sct_docker_images.py generate --version 3.1.1
 
 Example: creation of offline archive tarball:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --generate-offline-sct-distro
+   ./sct_docker_images.py generate --version 3.1.1 --generate-offline-sct-distro
 
 Example: creation and distribution:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --publish-under zougloub/neuropoly
+   ./sct_docker_images.py generate --version 3.1.1 --publish-under neuropoly/sct
+
+
+
+General Notes
+#############
+
+- Caveat #1: When building images, specify a tag name or commit id, not a branch
+  name, unless you have invalidated the Docker cache... or Docker will
+  reuse whatever was existing and not test the right version
+
