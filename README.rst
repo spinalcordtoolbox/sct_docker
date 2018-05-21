@@ -32,13 +32,18 @@ pretty much anywhere else.
 Usage
 *****
 
-#. Start container
+#. Start throw-away container on the image:
 
    .. code:: sh
 
       docker run -p 2222:22 --rm -it sct-3.1.1-official
 
 #. Connect to it: run ``windows/sct-win.xlaunch``.
+
+
+Note: read the Docker documentation to create a persistent container
+from the image, map your local folders on the container, which you
+probably want to perform.
 
 
 Online Installation
@@ -89,7 +94,7 @@ Docker for Other OSes
 Usage
 *****
 
-#. Start container
+#. Start throw-away container on the image:
 
    .. code:: sh
 
@@ -100,6 +105,11 @@ Usage
    .. code:: sh
 
       ssh localhost:2222
+
+
+Note: read the Docker documentation to create a persistent container
+from the image, map your local folders on the container, which you
+probably want to perform.
 
 
 Online Installation
