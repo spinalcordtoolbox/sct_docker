@@ -38,12 +38,17 @@ Usage
 
       docker run -p 2222:22 --rm -it sct-3.1.1-official
 
-#. Connect to it: run ``windows/sct-win.xlaunch``.
+#. Connect to it using Xming/SSH if X forwarding is needed
+   (eg. running FSLeyes from there):
+
+   Run ``windows/sct-win.xlaunch`` found in this repository.
 
 
-Note: read the Docker documentation to create a persistent container
-from the image, map your local folders on the container, which you
-probably want to perform.
+Notes:
+
+- Read the Docker documentation to create a persistent container
+  from the image, map your local folders on the container, which you
+  probably want to perform.
 
 
 Online Installation
@@ -98,18 +103,21 @@ Usage
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it sct-3.1.1-official
+      docker run -p 2222:22 --rm --tty --interactive sct-3.1.1-official
 
-#. Connect to container
+#. Connect to container using SSH if X forwarding is needed
+   (eg. running FSLeyes from there):
 
    .. code:: sh
 
-      ssh localhost:2222
+      ssh -Y sct@localhost:2222
 
 
-Note: read the Docker documentation to create a persistent container
-from the image, map your local folders on the container, which you
-probably want to perform.
+Notes:
+
+- Read the Docker documentation to create a persistent container
+  from the image, map your local folders on the container, which you
+  probably want to perform.
 
 
 Online Installation
