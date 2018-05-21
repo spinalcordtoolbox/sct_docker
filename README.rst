@@ -6,8 +6,27 @@ Spinal Cord Toolbox Docker
 ##########################
 
 
+.. contents::
+..
+    1  Docker for Windows
+      1.1  Usage
+      1.2  Online Installation
+      1.3  Offline Installation
+    2  Docker for Other OSes
+      2.1  Usage
+      2.2  Online Installation
+      2.3  Offline Installation
+    3  Offline Archives
+      3.1  Usage
+    4  Generation and Distribution
+
+
 Docker for Windows
 ##################
+
+
+That would be the main reason to use Docker, as SCT can be installed
+pretty much anywhere else.
 
 
 Usage
@@ -17,10 +36,30 @@ Usage
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it sct-official-3.1.1
+      docker run -p 2222:22 --rm -it sct-3.1.1-official
 
 #. Connect to it: run ``windows/sct-win.xlaunch``.
 
+
+Online Installation
+*******************
+
+
+#. Install git (in case you don't already have it), this is to provide
+   an ssh binary.
+
+#. Install Xming.
+
+#. Install Docker
+
+#. Fetch the SCT image from Docker Hub
+
+   Open PowerShell and run:
+
+
+   .. code:: sh
+
+      docker pull neuropoly/sct:sct-3.1.1-official
 
 
 Offline Installation
@@ -33,29 +72,58 @@ Offline Installation
 
 #. Install Docker.
 
-#. Open PowerShell and run:
+#. Load the SCT image from a local file
+
+   Open PowerShell and run:
 
    .. code:: sh
 
-      docker load sct-official-3.1.1.tar
+      docker load sct-3.1.1-official.tar
 
 
-Construction
-************
 
-.. code:: sh
-
-
-An SCT  with ssh Dockerfile
-To build the container:
-docker build --tag neuropoly/sct .
-
-To run the sct:
-
-Then ssh to the contaner with X tunelling enable  option and the port to 2222 on the local host , you should then be
-able to all sct features on a windows machine.
+Docker for Other OSes
+#####################
 
 
+Usage
+*****
+
+#. Start container
+
+   .. code:: sh
+
+      docker run -p 2222:22 --rm -it sct-3.1.1-official
+
+#. Connect to container
+
+   .. code:: sh
+
+      ssh localhost:2222
+
+
+Online Installation
+*******************
+
+#. Install Docker
+
+#. Load the SCT image from Docker Hub
+
+   .. code:: sh
+
+      docker pull neuropoly/sct:sct-3.1.1-official
+
+
+Offline Installation
+********************
+
+#. Install Docker.
+
+#. Load the SCT image from a local file
+
+   .. code:: sh
+
+      docker load sct-3.1.1-official.tar
 
 
 
@@ -86,8 +154,10 @@ Usage
       sct_check_dependencies
 
 
+
+
 Generation and Distribution
-***************************
+###########################
 
 The tool `sct_docker_images.py` helps with creation and distribution
 of SCT Docker images.
