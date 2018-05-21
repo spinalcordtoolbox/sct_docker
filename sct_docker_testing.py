@@ -149,3 +149,7 @@ if __name__ == "__main__":
 		res = run_test(distros=args.distros, version=args.version,
 		 commands=args.commands, jobs=args.jobs)
 
+	else:
+		parser.print_help(sys.stderr)
+		raise SystemExit(1)
+

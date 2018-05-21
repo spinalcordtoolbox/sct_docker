@@ -207,4 +207,6 @@ if __name__ == "__main__":
 		 publish_under=args.publish_under,
 		 jobs=args.jobs)
 		raise SystemExit(res)
-
+	else:
+		parser.print_help(sys.stderr)
+		raise SystemExit(1)
