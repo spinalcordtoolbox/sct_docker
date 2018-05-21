@@ -4,6 +4,41 @@
 import sys, io, os, logging, time, datetime, shutil
 
 
+if sys.hexversion < 0x03030000:
+	import pipes
+	def list2cmdline(lst):
+		return " ".join(pipes.quote(x) for x in lst)
+else:
+	import shlex
+	def list2cmdline(lst):
+		return " ".join(shlex.quote(x) for x in lst)
+
+def printf(x):
+	sys.stdout.write(x)
+	sys.stdout.flush()
+
+
+def check_exe(name):
+	"""
+	Ensure that a program exists
+	:type name: string
+	:param name: name or path to program
+	:return: path of the program or None
+	"""
+	def is_exe(fpath):
+		return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+	fpath, fname = os.path.split(name)
+	if fpath and is_exe(name):
+		return fpath
+	else:
+		for path in os.environ["PATH"].split(os.pathsep):
+			path = path.strip('"')
+			exe_file = os.path.join(path, name)
+			if is_exe(exe_file):
+				return exe_file
+
+
 def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
  install_compilers=False,
  install_fsleyes=False,

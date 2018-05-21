@@ -5,20 +5,7 @@
 import sys, io, os, logging, time, datetime, shutil, datetime, subprocess
 
 import sct_docker
-
-
-if sys.hexversion < 0x03030000:
-	import pipes
-	def list2cmdline(lst):
-		return " ".join(pipes.quote(x) for x in lst)
-else:
-	import shlex
-	def list2cmdline(lst):
-		return " ".join(shlex.quote(x) for x in lst)
-
-def printf(x):
-	sys.stdout.write(x)
-	sys.stdout.flush()
+from sct_docker import printf, check_exe
 
 default_distros = (
  "ubuntu:14.04",
@@ -71,8 +58,11 @@ def generate(distros=None, version=None,
 		print("")
 	print("Done generating distro Dockerfiles")
 
-
 	print("Building images")
+
+	if not check_exe("docker"):
+		raise RuntimeError("You might want to have docker available when running this tool")
+
 	from multiprocessing.pool import ThreadPool
 	pool = ThreadPool(jobs)
 
@@ -137,7 +127,10 @@ def generate(distros=None, version=None,
 		print("Done generating Docker tarballs")
 
 	if generate_distro_specific_sct_tarball:
+
 		print("Generating offline archives")
+		if not (check_exe("xz") and check_exe("bash")):
+			raise RuntimeError("You might want to have bash & xz available when running this tool")
 		for name in names:
 			printf("- %s..." % name)
 			cmd = ["bash", "-c", "docker run --log-driver=none --entrypoint /bin/sh {} -c 'cd /home/sct; tar c sct_*'" \
