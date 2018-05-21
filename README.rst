@@ -66,7 +66,7 @@ Usage
 *****
 
 #. Extract archive in `/home/sct` (unfortunately due to hard-coded paths in the
-installation folder, this is mandatory):
+   installation folder, this is mandatory):
 
    .. code:: sh
 
