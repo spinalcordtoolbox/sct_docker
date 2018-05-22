@@ -60,7 +60,7 @@ Online Installation
 
 #. Install Xming.
 
-#. Install Docker
+#. Install Docker (or Docker Toolbox on Windows Home).
 
 #. Fetch the SCT image from Docker Hub
 
@@ -80,7 +80,7 @@ Offline Installation
 
 #. Install Xming.
 
-#. Install Docker.
+#. Install Docker (or Docker Toolbox on Windows Home).
 
 #. Load the SCT image from a local file
 
