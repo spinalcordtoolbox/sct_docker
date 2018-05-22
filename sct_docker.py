@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 vi:noet
 
-import sys, io, os, logging, time, datetime, shutil
+import sys, io, os, re, logging, time, datetime, shutil
 
 
 if sys.hexversion < 0x03030000:
@@ -193,7 +193,8 @@ EXPOSE 22
 	""".strip()
 
 
-	if version in ("3.1.1", "3.1.0"):
+
+	if re.match(r"^\d+\.\d+\.\d+$", version):
 		sct_dir = "/home/sct/sct_{}".format(version)
 		frag += "\n" + """
 RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/v{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}
