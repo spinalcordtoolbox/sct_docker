@@ -38,6 +38,12 @@ Usage
 
       docker run -p 2222:22 --rm -it sct-3.1.1-official
 
+#. Change the password (default is `sct`) from the container prompt:
+
+   .. code:: sh
+
+      passwd
+
 #. Connect to it using Xming/SSH if X forwarding is needed
    (eg. running FSLeyes from there):
 
@@ -104,6 +110,13 @@ Usage
    .. code:: sh
 
       docker run -p 2222:22 --rm --tty --interactive sct-3.1.1-official
+
+
+#. Change the password (default is `sct`) from the container prompt:
+
+   .. code:: sh
+
+      passwd
 
 #. Connect to container using SSH if X forwarding is needed
    (eg. running FSLeyes from there):
