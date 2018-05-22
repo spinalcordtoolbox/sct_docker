@@ -70,7 +70,7 @@ RUN apt-get install -y curl sudo
 RUN apt-get install -y bzip2
 
 # For remote GUI access
-RUN apt-get install -y xorg
+RUN apt-get install -y xorg xterm lxterminal
 RUN apt-get install -y openssh-server
 	""".strip()
 
@@ -84,7 +84,7 @@ RUN yum install -y curl sudo
 RUN yum install -y bzip2
 
 # For remote GUI access
-RUN yum install -y xorg-x11-twm xorg-x11-xauth
+RUN yum install -y xorg-x11-twm xorg-x11-xauth xterm lxterminal
 RUN yum install -y openssh-server
 
 # For SCT
@@ -103,7 +103,7 @@ RUN dnf install -y curl sudo
 RUN dnf install -y bzip2
 
 # For remote GUI access
-RUN dnf install -y xorg-x11-twm xorg-x11-xauth
+RUN dnf install -y xorg-x11-twm xorg-x11-xauth xterm lxterminal
 RUN dnf install -y openssh-server
 
 # For SCT
