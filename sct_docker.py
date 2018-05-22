@@ -272,8 +272,8 @@ RUN echo Finished
 
 	if not os.path.exists(name):
 		os.makedirs(name)
-	with io.open(os.path.join(name, "Dockerfile"), "w") as f:
-		f.write(frag)
+	with io.open(os.path.join(name, "Dockerfile"), "wb") as f:
+		f.write(frag.encode("utf-8"))
 
 	if verbose:
 		logging.info("You can now run: docker build -t %s %s", name, name)
