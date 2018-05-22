@@ -309,10 +309,12 @@ if __name__ == "__main__":
 	subp.add_argument("--distro",
 	 default="ubuntu:16.04",
 	 help="Distribution to use (docker image)",
+	 required=True,
 	)
 
 	subp.add_argument("--version",
 	 default="3.1.1",
+	 required=True,
 	)
 
 	try:
@@ -326,4 +328,6 @@ if __name__ == "__main__":
 	if args.command == "generate":
 		name = generate(distro=args.distro, version=args.version)
 		print(name)
-
+	else:
+		parser.print_help(sys.stderr)
+		raise SystemExit(1)
