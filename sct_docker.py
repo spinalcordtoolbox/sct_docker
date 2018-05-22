@@ -226,20 +226,49 @@ RUN bash -i -c "sct_download_data -d sct_testing_data"
 		if distro in ("debian:8", "ubuntu:14.04"):
 			frag += "\n" + """
 # Install more fsleyes dependencies
-RUN bash -i -c "pip install --user --upgrade pip"
-RUN bash -i -c "pip install --user --upgrade setuptools"
 RUN bash -i -c "sudo apt-get install -y python-dev"
-RUN bash -i -c "sudo apt-get install -y python-numpy python-scipy python-matplotlib"
+#RUN bash -i -c "sudo apt-get install -y python-numpy python-scipy python-matplotlib"
 RUN bash -i -c "sudo apt-get install -y liblapack-dev"
 RUN bash -i -c "sudo apt-get install -y gfortran"
 
 # for pillow
 RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
+
+# for matplotlib wxagg support
+#RUN bash -i -c "sudo apt-get install -y python-wxgtk3.0"
+
 # can't use system packages as they'd get updated
+RUN bash -i -c "pip install --user --upgrade pip"
+RUN bash -i -c "pip install --user --upgrade setuptools"
 RUN bash -i -c "pip install --user --upgrade numpy"
 RUN bash -i -c "pip install --user --upgrade scipy"
 RUN bash -i -c "pip install --user --upgrade Pillow"
 RUN bash -i -c "pip install --user --upgrade wxPython"
+			""".strip()
+
+		if distro in ("debian:7",):
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN bash -i -c "sudo apt-get install -y python-dev"
+#RUN bash -i -c "sudo apt-get install -y python-numpy python-scipy python-matplotlib"
+RUN bash -i -c "sudo apt-get install -y liblapack-dev"
+RUN bash -i -c "sudo apt-get install -y gfortran"
+
+# for pillow
+RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
+
+# for matplotlib wxagg support
+#RUN bash -i -c "sudo apt-get install -y python-wxgtk3.0"
+
+# can't use system packages as they'd get updated
+RUN bash -i -c "sudo pip install --upgrade https://github.com/pypa/pip/archive/72f219c410b0ce25f7da44be6172c1e3766bbe6b.zip"
+RUN bash -i -c "pip install --user --upgrade pip"
+RUN bash -i -c "pip install --user --upgrade setuptools"
+RUN bash -i -c "pip install --user --upgrade numpy"
+RUN bash -i -c "pip install --user --upgrade scipy"
+RUN bash -i -c "pip install --user --upgrade Pillow"
+RUN bash -i -c "pip install --user --upgrade wxPython"
+# :| wxPython/ext/wxWidgets/src/gtk/settings.cpp:260:29: error: 'GTK_TYPE_HEADER_BAR' was not declared in this scope
 			""".strip()
 
 		frag += "\n" + """

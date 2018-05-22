@@ -11,7 +11,7 @@ default_distros = (
  "ubuntu:14.04",
  "ubuntu:16.04",
  "ubuntu:18.04",
- #"debian:7" # has issues with fsleyes
+ #"debian:7", # has issues with installing wxPython (fsleyes dep)
  "debian:8",
  "debian:9",
  "fedora:25",
