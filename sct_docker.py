@@ -222,6 +222,26 @@ RUN bash -i -c "sct_download_data -d sct_testing_data"
 	""".strip()
 
 	if install_fsleyes:
+
+		if distro in ("debian:8", "ubuntu:14.04"):
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN bash -i -c "pip install --user --upgrade pip"
+RUN bash -i -c "pip install --user --upgrade setuptools"
+RUN bash -i -c "sudo apt-get install -y python-dev"
+RUN bash -i -c "sudo apt-get install -y python-numpy python-scipy python-matplotlib"
+RUN bash -i -c "sudo apt-get install -y liblapack-dev"
+RUN bash -i -c "sudo apt-get install -y gfortran"
+
+# for pillow
+RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
+# can't use system packages as they'd get updated
+RUN bash -i -c "pip install --user --upgrade numpy"
+RUN bash -i -c "pip install --user --upgrade scipy"
+RUN bash -i -c "pip install --user --upgrade Pillow"
+RUN bash -i -c "pip install --user --upgrade wxPython"
+			""".strip()
+
 		frag += "\n" + """
 #RUN bash -i -c "$SCT_DIR/python/bin/pip install fsleyes"
 RUN bash -i -c "pip install --user fsleyes"
