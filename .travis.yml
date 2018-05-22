@@ -8,7 +8,7 @@ language: python
 matrix:
   include:
     - os: linux
-      python: 2.7 # Just to make travis's UI a bit prettier
+      python: 2.7
     - os: linux
       python: 3.6
     - os: osx
