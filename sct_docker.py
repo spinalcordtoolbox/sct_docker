@@ -135,6 +135,7 @@ RUN sudo yum install -y redhat-rpm-config gcc "gcc-c++" make
 	if install_fsleyes:
 		if distro in ("debian:7",):
 			frag += "\n" + """
+RUN sudo apt-get install -y python-pip
 RUN sudo apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev libgtk-3-dev
 RUN sudo apt-get install -y libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
 RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
@@ -142,6 +143,7 @@ RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 
 		elif distro.startswith(("debian", "ubuntu")):
 			frag += "\n" + """
+RUN sudo apt-get install -y python-pip
 RUN sudo apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev
 RUN sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
@@ -149,6 +151,7 @@ RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 
 		elif distro in ("fedora:27",):
 			frag += "\n" + """
+RUN sudo dnf install -y python-pip
 RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
 RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo dnf install -y webkitgtk4-devel
@@ -156,6 +159,7 @@ RUN sudo dnf install -y webkitgtk4-devel
 
 		elif distro.startswith("fedora"):
 			frag += "\n" + """
+RUN sudo dnf install -y python-pip
 RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
 RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
@@ -163,6 +167,7 @@ RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
 
 		elif distro.startswith("centos"):
 			frag += "\n" + """
+RUN sudo yum install -y python-pip
 RUN sudo yum install -y gtkmm30-devel gtkglext-devel freeglut-devel
 RUN sudo yum install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo yum install -y webkitgtk3-devel webkitgtk-devel
@@ -217,7 +222,9 @@ RUN bash -i -c "sct_download_data -d sct_testing_data"
 
 	if install_fsleyes:
 		frag += "\n" + """
-RUN bash -i -c "$SCT_DIR/python/bin/pip install fsleyes"
+#RUN bash -i -c "$SCT_DIR/python/bin/pip install fsleyes"
+RUN bash -i -c "pip install --user fsleyes"
+RUN bash -i -c "echo 'PATH+=:~/.local/bin' >> ~/.bashrc"
 		""".strip()
 
 	if install_fsl:
