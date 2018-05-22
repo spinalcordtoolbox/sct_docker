@@ -268,7 +268,7 @@ EXPOSE 8888
 
 RUN echo  X11UseLocalhost no | sudo tee --append /etc/ssh/sshd_config
 
-ENTRYPOINT bash -c 'sudo /usr/sbin/sshd; /bin/bash'
+ENTRYPOINT bash -c 'sudo mkdir -p /run/sshd; sudo /usr/sbin/sshd; /bin/bash'
 		""".strip()
 
 	frag += "\n" + """
