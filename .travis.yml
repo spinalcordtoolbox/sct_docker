@@ -1,0 +1,19 @@
+sudo: required
+
+services:
+  - docker
+
+language: python
+
+matrix:
+  include:
+    - os: linux
+      python: 2.7 # Just to make travis's UI a bit prettier
+    - os: linux
+      python: 3.6
+    - os: osx
+      python: 2.7
+
+script:
+  - ./sct_docker_testing.py test
+  - ./sct_docker_images.py generate
