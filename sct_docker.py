@@ -151,7 +151,7 @@ RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 
 		elif distro in ("fedora:27",):
 			frag += "\n" + """
-RUN sudo dnf install -y python-pip
+RUN sudo dnf install -y python-pip python-devel
 RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
 RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo dnf install -y webkitgtk4-devel
@@ -159,7 +159,7 @@ RUN sudo dnf install -y webkitgtk4-devel
 
 		elif distro.startswith("fedora"):
 			frag += "\n" + """
-RUN sudo dnf install -y python-pip
+RUN sudo dnf install -y python-pip python-devel
 RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
 RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
@@ -167,7 +167,8 @@ RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
 
 		elif distro.startswith("centos"):
 			frag += "\n" + """
-RUN sudo yum install -y python-pip
+RUN sudo yum install -y epel-release
+RUN sudo yum install -y python-pip python-devel
 RUN sudo yum install -y gtkmm30-devel gtkglext-devel freeglut-devel
 RUN sudo yum install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN sudo yum install -y webkitgtk3-devel webkitgtk-devel
