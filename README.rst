@@ -68,7 +68,7 @@ Online Installation
 
 #. Install Docker (or Docker Toolbox on Windows Home).
 
-#. Fetch the SCT image from Docker Hub
+#. Fetch the SCT image from `Docker Hub <https://hub.docker.com/r/neuropoly/sct/>`_:
 
    Open PowerShell and run:
 
@@ -138,7 +138,7 @@ Online Installation
 
 #. Install Docker
 
-#. Load the SCT image from Docker Hub
+#. Fetch the SCT image from `Docker Hub <https://hub.docker.com/r/neuropoly/sct/>`_:
 
    .. code:: sh
 
