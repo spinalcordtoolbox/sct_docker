@@ -73,7 +73,7 @@ Offline Installation
 
       docker load --input sct-3.2.1-official-ubuntu_18.04.tar
       
-    After the parametri input you can include the complete path where the docker image is located. In the extample it is                assumed that the image is in the current directory
+After the --input parameter you can include the complete path where the docker image is located. In the extample it is assumed that the image is in the current directory
 
 Usage
 *****
