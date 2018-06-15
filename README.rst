@@ -67,11 +67,13 @@ Offline Installation
 
 #. Load the SCT image from a local file
 
-   Open CMD and run:
+   Open CMD or if you are using Docker toolbox open Docker Quickstart Terminal wait until get a prompt and run:
 
    .. code:: sh
 
       docker load --input sct-3.2.1-official-ubuntu_18.04.tar
+      
+    After the parametri input you can include the complete path where the docker image is located. In the extample it is                assumed that the image is in the current directory
 
 Usage
 *****
