@@ -23,6 +23,7 @@ install a different version of SCT please change the 3.2.1 by the version number
     4  Generation and Distribution
 
 
+
 Docker for Windows
 ####################################
 
@@ -32,6 +33,10 @@ Docker runs natively only on Windows 10 Pro/Enterprise. Download the docker inst
 
 To Install Docker in Windows XP/VISTA/7/8/8.1/10 others than Pro/Enterprise use `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_. Here is the the `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_.
 
+When using Docker Toolbox, mounting folders in a docker container can be a bit complicated and has certain limitations.
+The main limitation is that by default we will only be able to mount folders that are inside the C:/Users folder.
+
+To be able to process NIFTI volumes that we have in our Windows PC we will go to the folder C:/Users and create a folder called docker_shared_folder This folder that we have just created will be our work folder in which we will place all the volumes that we want to process using the SCT.
 
 
 Online Installation
@@ -47,12 +52,14 @@ Online Installation
 
 #. Fetch the SCT image from `Docker Hub <https://hub.docker.com/r/neuropoly/sct/>`_:
 
-   Open PowerShell and run:
+   Open CMD or if you are using Docker Toolbox open Docker Quickstart Terminal wait until get a prompt and run:
 
 
    .. code:: sh
 
       docker pull neuropoly/sct:sct-3.2.1-official
+
+#. Go to C:/Users and create the folder named **docker_shared_folder**
 
 
 Offline Installation
@@ -67,13 +74,15 @@ Offline Installation
 
 #. Load the SCT image from a local file
 
-   Open CMD or if you are using Docker toolbox open Docker Quickstart Terminal wait until get a prompt and run:
+   Open CMD or if you are using Docker Toolbox open Docker Quickstart Terminal wait until get a prompt and run:
 
    .. code:: sh
 
       docker load --input sct-3.2.1-official-ubuntu_18.04.tar
-      
-After the --input parameter you can include the complete path where the docker image is located. In the extample it is assumed that the image is in the current directory
+
+    After the --input parameter you can include the complete path where the docker image is located. In the example it is assumed that the image is in the current directory
+
+#. Go to **C:/Users** and create the folder named **docker_shared_folder**
 
 Usage
 *****
@@ -82,7 +91,9 @@ Usage
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it sct-3.2.1-ubuntu-18.04
+      docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder sct-3.2.1-ubuntu-18.04
+
+    Note: The folder **C:/Users/docker_shared_folder** on the Windows host system will be linked to the folder **/home/sct/docker_shared_folder** inside the Docker container and the changes made to it will be visible for both the Docker container and the Windows system.
 
 #. (NOT MANDATORY) Change the password (default is `sct`) from the container prompt:
 
@@ -102,14 +113,6 @@ Usage
 #. If after closing a program with graphical interface (i.e. FSLeyes) LXterminal does not raise the Liniux ($) prompt then press Ctrl + C to finish closing the program.
 
 #. Then enjoy SCT ;)
-
-
-Notes:
-
-- Read the Docker documentation to create a persistent container
-  from the image, map your local folders on the container, which you
-  probably want to perform.
-
 
 
 Docker for Unix like OSes (GNU/Linux, BSD family, MacOS)
@@ -142,14 +145,20 @@ Offline Installation
 Usage
 *****
 
+#. Create a folder called **docker_shared_folder** in your home directory to be able to share information between your host system a the docker container.
+
+   .. code:: sh
+
+      mkdir ~/docker_shared_folder
+
 #. Start throw-away container on the image:
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it neuropoly/sct:sct-3.2.1-official
+      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-3.2.1-official
 
 
-#. Change the password (default is `sct`) from the container prompt:
+#. (NOT MANDATORY) Change the password (default is `sct`) from the container prompt:
 
    .. code:: sh
 
@@ -162,13 +171,7 @@ Usage
 
       ssh -Y sct@localhost:2222
 
-
-Notes:
-
-- Read the Docker documentation to create a persistent container
-  from the image, map your local folders on the container, which you
-  probably want to perform.
-
+#. Then enjoy SCT ;)
 
 
 Offline Archives
@@ -237,7 +240,6 @@ Example: creation and distribution:
 .. code:: sh
 
    ./sct_docker_images.py generate --version 3.2.1 --publish-under neuropoly/sct
-
 
 
 General Notes
