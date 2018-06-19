@@ -36,7 +36,9 @@ To Install Docker in Windows XP/VISTA/7/8/8.1/10 others than Pro/Enterprise use 
 When using Docker Toolbox, mounting folders in a docker container can be a bit complicated and has certain limitations.
 The main limitation is that by default we will only be able to mount folders that are inside the C:/Users folder.
 
+
 To be able to process NIFTI volumes that we have in our Windows PC we will go to the folder ``C:/Users`` and create a folder called ``docker_shared_folder`` This folder that we have just created will be our work folder in which we will place all the volumes that we want to process using the SCT.
+
 
 
 Online Installation
@@ -74,7 +76,9 @@ Online Installation
     Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
 
 
+
 #. Go to C:/Users and create the folder named ``docker_shared_folder``
+
 
 
 Offline Installation
@@ -111,7 +115,9 @@ Offline Installation
 
     Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
 
+
 #. Go to ``C:/Users``and create the folder named ``docker_shared_folder``
+
 
 Usage
 *****
