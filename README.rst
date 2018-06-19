@@ -73,7 +73,7 @@ Online Installation
 
       docker-machine start default
 
-    Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
+   **Note:** With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
 
 
 
@@ -99,7 +99,7 @@ Offline Installation
 
       docker load --input sct-3.2.1-official-ubuntu_18.04.tar
 
-    After the --input parameter you can include the complete path where the docker image is located. In the example it is assumed that the image is in the current directory
+  **Note:** After the --input parameter you can include the complete path where the docker image is located. In the example it is assumed that the image is in the current directory
 
 #. If you are **NOT** using Docker Toolbox skip this step. To avoid memory issues when running the SCT is important to increment the default amount of RAM (1GB) of the Docker VM. To do this:
 
@@ -113,7 +113,7 @@ Offline Installation
 
       docker-machine start default
 
-    Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
+   **Note:** With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
 
 
 #. Go to ``C:/Users``and create the folder named ``docker_shared_folder``
@@ -128,7 +128,7 @@ Usage
 
       docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder sct-3.2.1-ubuntu-18.04
 
-    Note: The folder ``C:/Users/docker_shared_folder`` on the Windows host system will be linked to the folder ``/home/sct/docker_shared_folder`` inside the Docker container and the changes made to it will be visible for both the Docker container and the Windows system.
+   **Note:** The folder ``C:/Users/docker_shared_folder`` on the Windows host system will be linked to the folder ``/home/sct/docker_shared_folder`` inside the Docker container and the changes made to it will be visible for both the Docker container and the Windows system.
 
 #. (NOT MANDATORY) Change the password (default is `sct`) from the container prompt:
 
