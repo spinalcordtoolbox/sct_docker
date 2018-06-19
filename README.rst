@@ -59,7 +59,7 @@ Online Installation
 
       docker pull neuropoly/sct:sct-3.2.1-official
 
-#. If you are **NOT** using Docker Toolbox skip this step. To avoid memory issues when running the SCT is important to increment the default amount of RAM (1GB) of the Docker VM. Tho do this:
+#. If you are **NOT** using Docker Toolbox skip this step. To avoid memory issues when running the SCT is important to increment the default amount of RAM (1GB) of the Docker VM. To do this:
 
    Open Docker Quickstart Terminal wait until get a prompt and run:
 
@@ -71,7 +71,7 @@ Online Installation
 
       docker-machine start default
 
-    Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to let at least 1 GB for your Windows host system.
+    Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
 
 
 #. Go to C:/Users and create the folder named **docker_shared_folder**
@@ -97,7 +97,7 @@ Offline Installation
 
     After the --input parameter you can include the complete path where the docker image is located. In the example it is assumed that the image is in the current directory
 
-#. If you are **NOT** using Docker Toolbox skip this step. To avoid memory issues when running the SCT is important to increment the default amount of RAM (1GB) of the Docker VM. Tho do this:
+#. If you are **NOT** using Docker Toolbox skip this step. To avoid memory issues when running the SCT is important to increment the default amount of RAM (1GB) of the Docker VM. To do this:
 
    Open Docker Quickstart Terminal wait until get a prompt and run:
 
@@ -109,7 +109,7 @@ Offline Installation
 
       docker-machine start default
 
-    Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to let at least 1 GB for your Windows host system.
+    Note: With these commands we have increased the RAM memory of the VM Docker to 2GB. It is important that your PC have at least 3 GB of RAM in order to leave at least 1 GB for your Windows host system.
 
 #. Go to **C:/Users** and create the folder named **docker_shared_folder**
 
