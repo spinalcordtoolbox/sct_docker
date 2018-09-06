@@ -21,13 +21,16 @@ install a different version of SCT please change the 3.2.1 by the version number
     3  Offline Archives
       3.1  Usage
     4  Generation and Distribution
-
+    5  General Notes
+    6  Support
 
 
 Docker for Windows
-####################################
+##################
 
-That would be the main reason to use Docker, as SCT can be installed pretty much anywhere else.
+That would be the main reason to use Docker, as SCT can be installed directly pretty much anywhere else.
+
+Note: in case of problem, see `Support`_.
 
 Docker runs natively only on Windows 10 Pro/Enterprise. Download the docker installer from the `Docker official site <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_
 
@@ -254,6 +257,7 @@ List of suported distros for docker images:
 - fedora:25
 - fedora:26
 - fedora:27
+- fedora:28
 - centos:7
 
 For the official image that is released on docker hub we use the Ubuntu 18.04 based image
@@ -283,3 +287,16 @@ General Notes
 - Caveat #1: When building images, specify a tag name or commit id, not a branch
   name, unless you have invalidated the Docker cache... or Docker will
   reuse whatever was existing and not test the right version
+
+
+Support
+#######
+
+Please try to differentiate issues about the SCT Docker packages or
+tools, and SCT itself.
+
+In case of problem, create issues `on the github project
+<https://github.com/neuropoly/sct_docker/issues>`_ and provide information
+allowing to quickly assist you.
+
+Thank you!
