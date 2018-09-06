@@ -17,6 +17,7 @@ default_distros = (
  "fedora:25",
  "fedora:26",
  "fedora:27",
+ "fedora:28",
  #"centos:6", #https://github.com/neuropoly/spinalcordtoolbox/issues/1704
  "centos:7",
 )
