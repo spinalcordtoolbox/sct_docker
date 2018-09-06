@@ -66,7 +66,9 @@ def run_test(distros=None, version=None, commands=None, jobs=None):
 		for name in names:
 
 			cmd = [
-			 "docker", "build", "-t", name, name,
+			 "docker", "build",
+			 #"--no-cache",
+			 "-t", name, name,
 			]
 
 			promise = pool.apply_async(lambda x: subprocess.call(x), (cmd,))

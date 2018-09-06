@@ -41,6 +41,7 @@ def check_exe(name):
 
 def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
  install_compilers=False,
+ install_tools=False,
  install_fsleyes=False,
  install_fsl=False,
  configure_ssh=True,
@@ -198,7 +199,19 @@ WORKDIR /home/sct
 EXPOSE 22
 	""".strip()
 
-
+	if install_tools:
+		if distro.startswith("fedora"):
+			frag += "\n" + """
+RUN sudo dnf install -y psmisc net-tools
+			""".strip()
+		elif distro.startswith("centos"):
+			frag += "\n" + """
+RUN sudo yum install -y psmisc net-tools
+			""".strip()
+		elif distro.startswith(("ubuntu", "debian")):
+			frag += "\n" + """
+RUN sudo apt-get install -y psmisc net-tools
+			""".strip()
 
 	if re.match(r"^\d+\.\d+\.\d+$", version):
 		sct_dir = "/home/sct/sct_{}".format(version)
