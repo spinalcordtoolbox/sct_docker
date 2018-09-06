@@ -20,8 +20,8 @@ the 3.2.4 by the version number you want.
     3  Offline Archives
       3.1  Usage
     4  Generation and Distribution
-    5  General Notes
-    6  Support
+      4.1  Notes
+    5  Support
 
 
 Docker for Windows
@@ -319,12 +319,16 @@ Example: creation and distribution:
    --publish-under neuropoly/sct
 
 
-General Notes
-#############
+Notes
+*****
 
 - Caveat #1: When building images, specify a tag name or commit id, not a branch
   name, unless you have invalidated the Docker cache... or Docker will
   reuse whatever was existing and not test the right version
+
+- Caveat #2: when building distro images, you may want to run `docker
+  build` discarding the Docker cache, because commands such as
+  `apt-get update` are cached leading to outdated package URLs.
 
 
 Support
