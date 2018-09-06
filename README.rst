@@ -12,13 +12,11 @@ the 3.2.4 by the version number you want.
 .. contents::
 ..
     1  Docker for Windows
-      1.1  Online Installation
-      1.2  Offline Installation
-      1.3  Usage
+      1.1  Installation
+      1.2  Usage
     2  Docker for Unix like OSes (GNU/Linux, BSD family, MacOS)
-      2.1  Online Installation
-      2.2  Offline Installation
-      2.3  Usage
+      2.1  Installation
+      2.2  Usage
     3  Offline Archives
       3.1  Usage
     4  Generation and Distribution
@@ -192,28 +190,26 @@ Usage
 Docker for Unix like OSes (GNU/Linux, BSD family, MacOS)
 ########################################################
 
-Online Installation
-*******************
+
+Installation
+************
 
 #. Install Docker
 
-#. Fetch the SCT image from `Docker Hub <https://hub.docker.com/r/neuropoly/sct/>`_:
+#. Fetch/install the SCT image:
 
-   .. code:: sh
+   - If internet access, from `Docker Hub
+     <https://hub.docker.com/r/neuropoly/sct/>`_:
 
-      docker pull neuropoly/sct:sct-3.2.4-official
+     .. code:: sh
 
+        docker pull neuropoly/sct:sct-3.2.4-official
 
-Offline Installation
-********************
+   - Else, load the SCT image from a local file
 
-#. Install Docker.
+     .. code:: sh
 
-#. Load the SCT image from a local file
-
-   .. code:: sh
-
-      docker load --input sct-3.2.4-official-ubuntu_18.04.tar
+        docker load --input sct-3.2.4-official-ubuntu_18.04.tar
 
 
 Usage
