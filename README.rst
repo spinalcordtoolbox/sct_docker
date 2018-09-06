@@ -34,20 +34,23 @@ directly pretty much anywhere else.
 
 Note: in case of problem, see `Support`_.
 
-Docker runs natively only on Windows 10 Pro/Enterprise. Download the
-docker installer from the `Docker official site
+Docker runs natively only on Windows 10 Pro/Enterprise.
+Download the docker installer from the `Docker official site
 <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_
 
 To Install Docker in Windows XP/VISTA/7/8/8.1/10 others than
 Pro/Enterprise use `Docker Toolbox
 <https://docs.docker.com/toolbox/overview/>`_.
+
 Here is the the `tutorial
 <https://docs.docker.com/toolbox/toolbox_install_windows/>`_.
 
 When using Docker Toolbox, mounting folders in a docker container can
 be a bit complicated and has certain limitations.
 The main limitation is that by default we will only be able to mount
-folders that are inside the C:/Users folder.
+folders that are inside the ``C:/Users`` folder, for compatibility
+reasons we will consider a shared folder under this folder, but it can
+be changed.
 
 
 To be able to process NIFTI volumes that we have in our Windows PC we
@@ -58,25 +61,43 @@ process using the SCT.
 
 
 
-Online Installation
-*******************
+Installation
+************
 
 
 #. Install git (in case you don't already have it), this is to provide
-   an ssh binary.
+   an SSH binary.
 
 #. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
 
 #. Install Docker (or Docker Toolbox depending of your Windows version).
 
-#. Fetch the SCT image from `Docker Hub <https://hub.docker.com/r/neuropoly/sct/>`_:
+#. Fetch the SCT image
 
-   Open CMD or if you are using Docker Toolbox open Docker Quickstart
-   Terminal wait until get a prompt and run:
+   Either:
 
-   .. code:: sh
+   - Online, from `Docker Hub <https://hub.docker.com/r/neuropoly/sct/>`_:
 
-      docker pull neuropoly/sct:sct-3.2.4-official
+     Open CMD or if you are using Docker Toolbox open Docker Quickstart
+     Terminal wait until get a prompt and run:
+
+     .. code:: sh
+
+        docker pull neuropoly/sct:sct-3.2.4-official
+
+   - Local, from a downloaded archive
+
+     Open CMD or if you are using Docker Toolbox open Docker Quickstart
+     Terminal wait until get a prompt and run:
+
+     .. code:: sh
+
+        docker load --input sct-3.2.4-official-ubuntu_18.04.tar
+
+     **Note:** After the --input parameter you can include the complete
+     path where the docker image is located.
+     In the example it is assumed that the image is in the current
+     directory.
 
 #. If you are **NOT** using Docker Toolbox skip this step. To avoid
    memory issues when running the SCT is important to increment the
@@ -99,69 +120,35 @@ Online Installation
    leave at least 1 GB for your Windows host system.
 
 
-#. Go to C:/Users and create the folder named ``docker_shared_folder``
+#. For sharing folders between host and container:
 
+   #. Go to `C:/Users` and create the folder named
+      ``docker_shared_folder``
 
+   #. If running Docker for Windows, click the Docker tray icon,
+      run settings and allow sharing of your `C:` drive with the container,
+      so as to allow access to the path.
 
-Offline Installation
-********************
-
-#. Install git (in case you don't already have it), this is to provide
-   an ssh binary.
-
-#. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
-
-#. Install Docker (or Docker Toolbox depending of your Windows version).
-
-#. Load the SCT image from a local file
-
-   Open CMD or if you are using Docker Toolbox open Docker Quickstart
-   Terminal wait until get a prompt and run:
-
-   .. code:: sh
-
-      docker load --input sct-3.2.4-official-ubuntu_18.04.tar
-
-  **Note:** After the --input parameter you can include the complete
-  path where the docker image is located.
-  In the example it is assumed that the image is in the current
-  directory.
-
-#. If you are **NOT** using Docker Toolbox skip this step.
-   To avoid memory issues when running the SCT is important to increment the
-   default amount of RAM (1GB) of the Docker VM.
-   To do this:
-
-   Open Docker Quickstart Terminal wait until get a prompt and run:
-
-   .. code:: sh
-
-      docker-machine stop default
-
-      /c/Program\ Files/Oracle/VirtualBox/VBoxManage.exe modifyvm default --memory 2048
-
-      docker-machine start default
-
-   **Note:** With these commands we have increased the RAM memory of
-   the VM Docker to 2GB.
-   It is important that your PC have at least 3 GB of RAM in order to
-   leave at least 1 GB for your Windows host system.
-
-#. Go to ``C:/Users``and create the folder named
-   ``docker_shared_folder``, which will be used for data exchange
-   between the host and the guest systems.
 
 
 Usage
 *****
 
 #. Start throw-away container on the image.
-   If you are using Docker toolbox open Docker Quickstart Terminal
-   wait until get a prompt and write:
 
-   .. code:: sh
+   - If you are using Docker toolbox open Docker Quickstart Terminal
+     wait until get a prompt and write:
 
-      docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder sct-3.2.4-ubuntu-18.04
+     .. code:: sh
+
+        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-3.2.4-official
+
+   - If running the standard docker, run:
+
+     .. code:: sh
+
+        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-3.2.4-official
+
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
    Windows host system will be linked to the folder
@@ -183,24 +170,23 @@ Usage
    repository. If you are using docker toolbox then then
    run``windows/sct-win_docker_toolbox.xlaunch``
 
-#. If this is the first time you have done this procedure, the system
+   If this is the first time you have done this procedure, the system
    will ask you if you want to add the remote PC (the docker
    container) as trust pc, type "yes" without "". Then type the
    password to enter the docker container (by default "sct" without
    "").
 
-#. The graphic terminal emulator LXterminal should appear, which
+   The graphic terminal emulator LXterminal should appear, which
    allows copying and pasting commands, which makes it easier for
    users to use it.
    To check that X forwarding is working well write ``fsleyes &`` in
    LXterminal and FSLeyes should open, depending on how fast your
    computer is FSLeyes may take a few seconds to open.
 
-#. If after closing a program with graphical interface (i.e. FSLeyes)
+   Note: If after closing a program with graphical interface (i.e. FSLeyes)
    LXterminal does not raise the shell ($) prompt then press Ctrl + C
    to finish closing the program.
 
-#. Then enjoy SCT ;)
 
 
 Docker for Unix like OSes (GNU/Linux, BSD family, MacOS)
