@@ -33,6 +33,7 @@ def generate(distros=None, version=None,
  publish_under=None,
  generate_docker_tarball=False,
  generate_distro_specific_sct_tarball=False,
+ build_options=[],
  ):
 	"""
 	"""
@@ -90,8 +91,9 @@ def generate(distros=None, version=None,
 		for name in names:
 
 			cmd = [
-			 "docker", "build", "-t", name, name,
-			]
+			 "docker", "build",
+			 "-t", name, name,
+			] + build_options
 
 			promise = pool.apply_async(lambda x: subprocess.call(x), (cmd,))
 			res.append(promise)
