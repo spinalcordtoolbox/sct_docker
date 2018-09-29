@@ -126,7 +126,7 @@ RUN sudo apt-get install -y build-essential
 		elif distro.startswith("fedora"):
 			frag += "\n" + """
 # sudo dnf groupinstall -y "Development Tools"
-RUN sudo dnf install -y redhat-rpm-config gcc "gcc-c++"
+RUN sudo dnf install -y redhat-rpm-config gcc "gcc-c++" make
 			""".strip()
 
 		elif distro.startswith("centos"):
@@ -151,7 +151,7 @@ RUN sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 			""".strip()
 
-		elif distro in ("fedora:27",):
+		elif distro in ("fedora:27","fedora:28","fedora:29"):
 			frag += "\n" + """
 RUN sudo dnf install -y python-pip python-devel
 RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
