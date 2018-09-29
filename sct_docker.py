@@ -64,6 +64,7 @@ FROM {distro}
 
 	if distro.startswith(("debian", "ubuntu")):
 		frag += "\n" + """
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y curl sudo
 
