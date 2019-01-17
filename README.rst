@@ -126,8 +126,9 @@ Installation
    #. If running Docker for Windows, click the Docker tray icon,
       run settings and allow sharing of your `C:` drive with the container,
       so as to allow access to the path.
-
-
+      
+#. Finally, reboot your computer after the installation. 
+   (Or you might end up with issues afterwards such as ``ssh: connect to host localhost port 2222: Cannot assign requested adress`` )
 
 Usage
 *****
@@ -166,7 +167,7 @@ Usage
 
    Run (double click) ``windows/sct-win.xlaunch`` found in this
    repository. If you are using docker toolbox then then
-   run``windows/sct-win_docker_toolbox.xlaunch``
+   run ``windows/sct-win_docker_toolbox.xlaunch``
 
    If this is the first time you have done this procedure, the system
    will ask you if you want to add the remote PC (the docker
@@ -184,6 +185,7 @@ Usage
    Note: If after closing a program with graphical interface (i.e. FSLeyes)
    LXterminal does not raise the shell ($) prompt then press Ctrl + C
    to finish closing the program.
+   
 
 
 
