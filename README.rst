@@ -126,8 +126,9 @@ Installation
    #. If running Docker for Windows, click the Docker tray icon,
       run settings and allow sharing of your `C:` drive with the container,
       so as to allow access to the path.
-
-
+      
+#. Finally, reboot your computer after the installation. 
+   (Or you might end up with issues afterwards such as ``ssh: connect to host localhost port 2222: Cannot assign requested adress`` )
 
 Usage
 *****
@@ -185,7 +186,6 @@ Usage
    LXterminal does not raise the shell ($) prompt then press Ctrl + C
    to finish closing the program.
    
-   Note2 : If you are having connectivity problems (errors related to connections), try restarting your computer. If the installation is done in one go (without ever rebooting) it is likely you will end up with connectivity problems.
 
 
 
