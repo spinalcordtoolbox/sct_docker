@@ -166,7 +166,7 @@ Usage
 
    Run (double click) ``windows/sct-win.xlaunch`` found in this
    repository. If you are using docker toolbox then then
-   run``windows/sct-win_docker_toolbox.xlaunch``
+   run ``windows/sct-win_docker_toolbox.xlaunch``
 
    If this is the first time you have done this procedure, the system
    will ask you if you want to add the remote PC (the docker
@@ -184,6 +184,8 @@ Usage
    Note: If after closing a program with graphical interface (i.e. FSLeyes)
    LXterminal does not raise the shell ($) prompt then press Ctrl + C
    to finish closing the program.
+   
+   Note2 : If you are having connectivity problems (errors related to connections), try restarting your computer. If the installation is done in one go (without ever rebooting) it is likely you will end up with connectivity problems.
 
 
 
