@@ -82,6 +82,8 @@ Installation
      .. code:: sh
 
         docker pull neuropoly/sct:sct-3.2.4-official
+        
+     Note: to list all available images on the registery, please see `Generation and distribution`_.
 
    - Local, from a downloaded archive
 
