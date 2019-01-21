@@ -299,6 +299,12 @@ List of suported distros for docker images:
 For the official image that is released on docker hub we use the
 Ubuntu 18.04 bas image.
 
+List all available images in the registery (you will need `wget` for this to work):
+
+.. code:: sh
+
+  wget -q https://registry.hub.docker.com/v1/repositories/neuropoly/sct/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}'
+
 Example: creation of all distros container images:
 
 .. code:: sh
