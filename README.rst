@@ -4,10 +4,7 @@
 Spinal Cord Toolbox Docker
 ##########################
 
-In this documentation file is used the SCT version 3.2.4 in the
-examples, if you want install a different version of SCT please change
-the 3.2.4 by the version number you want.
-
+This documentation shows how to install the latest version of SCT. If you want install a different version of SCT please specify the version number you want.
 
 .. contents::
 ..
@@ -81,7 +78,7 @@ Installation
 
      .. code:: sh
 
-        docker pull neuropoly/sct:sct-3.2.4-official
+        docker pull neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
         
      Note: to list all available images on the registery, please see `Generation and distribution`_.
 
@@ -92,7 +89,7 @@ Installation
 
      .. code:: sh
 
-        docker load --input sct-3.2.4-official-ubuntu_18.04.tar
+        docker load --input sct-4.0.0-beta.0-ubuntu_18.04.tar
 
      **Note:** After the --input parameter you can include the complete
      path where the docker image is located.
@@ -142,13 +139,13 @@ Usage
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-3.2.4-official
+        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
    - If running the standard docker, run:
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-3.2.4-official
+        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
@@ -207,13 +204,13 @@ Installation
 
      .. code:: sh
 
-        docker pull neuropoly/sct:sct-3.2.4-official
+        docker pull neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
    - Else, load the SCT image from a local file
 
      .. code:: sh
 
-        docker load --input sct-3.2.4-official-ubuntu_18.04.tar
+        docker load --input sct-v4.0.0-beta.0-ubuntu-18.04.tar
 
 
 Usage
@@ -231,7 +228,7 @@ Usage
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-3.2.4-official
+      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
 
 #. (NOT MANDATORY) Change the password (default is `sct`) from the container prompt:
@@ -262,13 +259,13 @@ Usage
    .. code:: sh
 
       cd $HOME
-      tar xf /path/to/sct-sct3.2.4-ubuntu_18_04-offline.tar.xz
+      tar xf /path/to/sct-v4.0.0-beta.0-ubuntu-18.04-offline.tar.xz
 
 #. Add PATH:
 
    .. code:: sh
 
-      PATH+=":/home/sct/sct_3.2.4/bin"
+      PATH+=":/home/sct/sct_4.0.0-beta.0/bin"
 
 #. Use it!
 
