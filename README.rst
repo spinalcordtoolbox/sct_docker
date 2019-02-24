@@ -60,12 +60,12 @@ Installation
 ************
 
 
-#. Install git (in case you don't already have it), this is to provide
+#. Install `git <https://git-scm.com/download/win>`_ (in case you don't already have it), this is to provide
    an SSH binary.
 
 #. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
 
-#. Install Docker (or Docker Toolbox depending of your Windows version).
+#. Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ (or `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_ depending of your Windows version).
 
 #. Fetch the SCT image
 
@@ -164,8 +164,7 @@ Usage
 #. Connect to it using Xming/SSH if X forwarding is needed
    (eg. running FSLeyes from there):
 
-   Run (double click) ``windows/sct-win.xlaunch`` found in this
-   repository. If you are using docker toolbox then then
+   Clone the current repository & run (double click) ``windows/sct-win.xlaunch``. If you are using docker toolbox then then
    run ``windows/sct-win_docker_toolbox.xlaunch``
 
    If this is the first time you have done this procedure, the system
