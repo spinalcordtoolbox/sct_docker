@@ -288,6 +288,7 @@ RUN bash -i -c "pip install --user --upgrade wxPython"
 
 		frag += "\n" + """
 #RUN bash -i -c "$SCT_DIR/python/bin/pip install fsleyes"
+RUN bash -i -c "pip install --user pathlib2"
 RUN bash -i -c "pip install --user fsleyes"
 RUN bash -i -c "echo 'PATH+=:~/.local/bin' >> ~/.bashrc"
 		""".strip()
