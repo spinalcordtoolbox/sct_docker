@@ -121,6 +121,7 @@ RUN dnf install -y compat-libstdc++-33 libstdc++
 			frag += "\n" + """
 RUN sudo apt-get update
 RUN sudo apt-get install -y build-essential
+RUN sudo apt-get install -y git
 			""".strip()
 
 		elif distro.startswith("fedora"):
