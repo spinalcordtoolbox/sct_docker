@@ -128,11 +128,13 @@ RUN sudo apt-get install -y git
 			frag += "\n" + """
 # sudo dnf groupinstall -y "Development Tools"
 RUN sudo dnf install -y redhat-rpm-config gcc "gcc-c++" make
+RUN sudo dnf install -y git
 			""".strip()
 
 		elif distro.startswith("centos"):
 			frag += "\n" + """
 RUN sudo yum install -y redhat-rpm-config gcc "gcc-c++" make
+RUN sudo yum install -y git
 			""".strip()
 
 	if install_fsleyes:
