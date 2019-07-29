@@ -223,14 +223,14 @@ RUN apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 RUN apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 			""".strip()
 
-		elif distro in ("fedora:27","fedora:28","fedora:29", "fedora:30"):
+		elif distro in ("fedora:27", "fedora:28", "fedora:29", "fedora:30"):
 			frag += "\n" + """
 RUN dnf install -y gtkmm30-devel gtkglext-devel
 RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
 RUN dnf install -y webkitgtk4-devel
 			""".strip()
 
-		elif distro in ("fedora:26",):
+		elif distro in ("fedora:25", "fedora:26",):
 			frag += "\n" + """
 RUN dnf install -y gtkmm30-devel gtkglext-devel freeglut-devel
 RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
