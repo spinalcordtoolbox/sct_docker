@@ -8,9 +8,10 @@ import sct_docker
 from sct_docker import printf, check_exe
 
 default_distros = (
- "ubuntu:14.04",
+ #"ubuntu:14.04",
  "ubuntu:16.04",
  "ubuntu:18.04",
+ "ubuntu:19.04",
  #"debian:7", # has issues with installing wxPython (fsleyes dep)
  "debian:8",
  "debian:9",
@@ -18,6 +19,8 @@ default_distros = (
  "fedora:26",
  "fedora:27",
  "fedora:28",
+ "fedora:29",
+ "fedora:30",
  "centos:7",
 )
 
@@ -34,6 +37,7 @@ def generate(distros=None, version=None,
  generate_docker_tarball=False,
  generate_distro_specific_sct_tarball=False,
  build_options=[],
+ proxy=False,
  ):
 	"""
 	"""
@@ -57,6 +61,7 @@ def generate(distros=None, version=None,
 		 #install_fsl=True,
 		 configure_ssh=True,
 		 verbose=False,
+		 proxy=proxy,
 		)
 
 		names.append(name)
@@ -71,6 +76,7 @@ def generate(distros=None, version=None,
 			 #install_fsl=True,
 			 configure_ssh=True,
 			 verbose=False,
+			 proxy=proxy,
 			)
 
 			names.append(name)
@@ -125,6 +131,9 @@ def generate(distros=None, version=None,
 		print(errs)
 		logging.error("Not proceeding further as one distro failed")
 		return 1
+
+	if proxy:
+		return 0
 
 	if publish_under:
 		print("Publishing on Docker hub")
@@ -213,6 +222,12 @@ if __name__ == "__main__":
 	 help="Where to publish on docker hub (x/y)",
 	)
 
+
+	subp.add_argument("--proxy",
+	 action="store_true",
+	 default=False,
+	)
+
 	try:
 		import argcomplete
 		argcomplete.autocomplete(parser)
@@ -226,7 +241,9 @@ if __name__ == "__main__":
 		 generate_docker_tarball=args.generate_docker_tarball,
 		 generate_distro_specific_sct_tarball=args.generate_distro_specific_sct_tarball,
 		 publish_under=args.publish_under,
-		 jobs=args.jobs)
+		 jobs=args.jobs,
+		 proxy=args.proxy,
+		)
 		raise SystemExit(res)
 	else:
 		parser.print_help(sys.stderr)

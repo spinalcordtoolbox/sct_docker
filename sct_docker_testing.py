@@ -11,6 +11,8 @@ default_distros = (
  "ubuntu:14.04",
  "ubuntu:16.04",
  "ubuntu:18.04",
+ "ubuntu:18.10",
+ "ubuntu:19.04",
  "debian:7",
  "debian:8",
  "debian:9",
@@ -18,6 +20,8 @@ default_distros = (
  "fedora:26",
  "fedora:27",
  "fedora:28",
+ "fedora:29",
+ "fedora:30",
  #"centos:6", #https://github.com/neuropoly/spinalcordtoolbox/issues/1704
  "centos:7",
 )

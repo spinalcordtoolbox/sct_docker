@@ -46,6 +46,7 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
  install_fsl=False,
  configure_ssh=True,
  verbose=True,
+ proxy=False,
  ):
 	"""
 	:param distro: Distribution (Docker specification)
@@ -64,9 +65,64 @@ FROM {distro}
 
 	if distro.startswith(("debian", "ubuntu")):
 		frag += "\n" + """
-ENV DEBIAN_FRONTEND noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update
-RUN apt-get install -y curl sudo
+RUN apt-get install -y curl ca-certificates
+ENV CERTDIR=/etc/ssl/certs
+ENV CERTECHO=echo
+	""".strip()
+
+	elif distro in ("centos:6", "centos:7",):
+		frag += "\n" + """
+RUN yum update -y
+
+RUN yum install -y curl ca-certificates
+ENV CERTDIR=/etc/pki/ca-trust/source/anchors
+ENV CERTECHO="echo -e"
+		""".strip()
+
+	elif distro.startswith(("fedora", "centos")):
+		frag += "\n" + """
+RUN dnf update -y
+
+RUN dnf install -y curl ca-certificates
+
+ENV CERTDIR=/etc/pki/ca-trust/source/anchors
+ENV CERTECHO="echo -e"
+		""".strip()
+
+	if proxy:
+		# Use CA certificate for local ssl_bump proxy
+		frag += "\n" + """
+RUN ${CERTECHO} "-----BEGIN CERTIFICATE-----\\nMIIDyTCCArGgAwIBAgIJAKF6rNGHC1AeMA0GCSqGSIb3DQEBCwUAMHsxCzAJBgNV\\nBAYTAkNBMQ8wDQYDVQQIDAZRdWViZWMxETAPBgNVBAcMCE1vbnRyZWFsMQ0wCwYD\\nVQQKDARub25lMRQwEgYDVQQDDAt6b3VnbG91Yi5ldTEjMCEGCSqGSIb3DQEJARYU\\nY0otc3F1aWRAem91Z2xvdWIuZXUwHhcNMTkwNzI3MjMwMzA1WhcNMjAwNzI2MjMw\\nMzA1WjB7MQswCQYDVQQGEwJDQTEPMA0GA1UECAwGUXVlYmVjMREwDwYDVQQHDAhN\\nb250cmVhbDENMAsGA1UECgwEbm9uZTEUMBIGA1UEAwwLem91Z2xvdWIuZXUxIzAh\\nBgkqhkiG9w0BCQEWFGNKLXNxdWlkQHpvdWdsb3ViLmV1MIIBIjANBgkqhkiG9w0B\\nAQEFAAOCAQ8AMIIBCgKCAQEAwyt/Iv5PE6hbWngoIDAY3zKh1V9luuyfweSs4/tg\\nz5btY1j+PqMOl2MpcYsVW7+HwqJq5E6jn2qMPA94XwfnylQqUL/rpC+90Lt964k0\\nVhQi5FhQkyW3R5WaN03cn2xyj4wsiSyPDP61274DpkymhXflCYsKp0Ta3C8VUV8U\\nPqEpzWwPdfi4Ej5XFidXGKdeE6JZftypFK2wyIA+cwbZE/MP7pp6BvoyIJsV5duq\\njF9ByhAtdka8B8IzBVtp87HjeT7MHAjHtrzddaW/s8Dfnr4HkQb+t2ZBDxlUDvWY\\n0jERTcToobfXU3TjRMPriQnbb4cDfbbbqUKucUw2c8aXaQIDAQABo1AwTjAdBgNV\\nHQ4EFgQU9PnADlRycQCVXhOaGre9oF6WrHswHwYDVR0jBBgwFoAU9PnADlRycQCV\\nXhOaGre9oF6WrHswDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAFPlT\\nZBs2zOI7CiNixIO7G3QFQKRUheFAQMll0w9FXQW+3aB7TcKtsu6iR0oIPoXx50G8\\nX1uaxi9CidO98yI1QLvnxZlumvX9peRooFryyUGrzN8Fiy8hdTtuS9KNzWDgVApj\\nIcqYr53RM/jzIS4AHRwaau8wrWaoiys3wvHKhNL9EH5I7WzKHS0elrjW5Mn4Ew0i\\n3gQ+rQ5VoL0Ljm8GA2EJQ9gzecdvShMuXAMFokte0BRvYwHEM4+mkGVoTdPrN/pf\\n2xnk91vA0AQnYbrottxGIpL9WwRSjyz8qQv/Nw8S2ohauJz3aDXcUNXOCm6RZ7Vl\\noSqg2oypaL1o9/b20g==\\n-----END CERTIFICATE-----" > ${CERTDIR}/zougloub.eu.pem
+RUN cat ${CERTDIR}/zougloub.eu.pem
+ENV https_proxy=http://zougloub.eu:3128 http_proxy=http://zougloub.eu:3128
+		""".strip()
+
+		if distro.startswith(("debian", "ubuntu")):
+			frag += "\n" + """
+RUN update-ca-certificates --verbose --fresh
+			""".strip()
+
+		elif distro.startswith(("centos", "fedora")):
+			frag += "\n" + """
+RUN update-ca-trust
+			""".strip()
+
+		if distro == "centos:6":
+			# https://www.happyassassin.net/2015/01/14/trusting-additional-cas-in-fedora-rhel-centos-dont-append-to-etcpkitlscertsca-bundle-crt-or-etcpkitlscert-pem/
+			frag += "\n" + """
+RUN update-ca-trust enable
+			""".strip()
+
+		# test
+		frag += "\n" + """
+RUN curl --verbose https://google.ca
+		""".strip().format(version)
+
+	if distro.startswith(("debian", "ubuntu")):
+		frag += "\n" + """
+RUN apt-get install -y sudo
 
 # For conda
 RUN apt-get install -y bzip2
@@ -78,9 +134,7 @@ RUN apt-get install -y openssh-server
 
 	elif distro in ("centos:6", "centos:7",):
 		frag += "\n" + """
-RUN yum update -y
-
-RUN yum install -y curl sudo
+RUN yum install -y sudo
 
 # For conda
 RUN yum install -y bzip2
@@ -93,13 +147,11 @@ RUN yum install -y openssh-server
 RUN yum install -y procps findutils which
 RUN yum search libstdc
 RUN yum install -y compat-libstdc++-33 libstdc++
-	""".strip()
+		""".strip()
 
 	elif distro.startswith(("fedora", "centos")):
 		frag += "\n" + """
-RUN dnf update -y
-
-RUN dnf install -y curl sudo
+RUN dnf install -y sudo
 
 # For conda
 RUN dnf install -y bzip2
@@ -112,82 +164,97 @@ RUN dnf install -y openssh-server
 RUN dnf install -y procps findutils which
 RUN dnf search libstdc
 RUN dnf install -y compat-libstdc++-33 libstdc++
-	""".strip()
-
-
+		""".strip()
 
 	if install_fsleyes or install_fsl or install_compilers:
 		if distro.startswith(("debian", "ubuntu")):
 			frag += "\n" + """
-RUN sudo apt-get update
-RUN sudo apt-get install -y build-essential
+
+RUN apt-get update
+RUN apt-get install -y build-essential
 			""".strip()
 
 		elif distro.startswith("fedora"):
 			frag += "\n" + """
-# sudo dnf groupinstall -y "Development Tools"
-RUN sudo dnf install -y redhat-rpm-config gcc "gcc-c++" make
+# dnf groupinstall -y "Development Tools"
+RUN dnf install -y redhat-rpm-config gcc "gcc-c++" make
 			""".strip()
 
 		elif distro.startswith("centos"):
 			frag += "\n" + """
-RUN sudo yum install -y redhat-rpm-config gcc "gcc-c++" make
+RUN yum install -y redhat-rpm-config gcc "gcc-c++" make
 			""".strip()
 
 	if install_fsleyes:
+		if distro.startswith(("debian", "ubuntu")):
+			frag += "\n" + """
+RUN apt-get install -y python-pip
+			""".strip()
+
+		elif distro.startswith("fedora"):
+			frag += "\n" + """
+RUN dnf install -y python-pip python-devel
+			""".strip()
+
+		elif distro.startswith("centos"):
+			frag += "\n" + """
+#RUN yum install -y epel-release
+RUN yum install -y python-pip python-devel
+			""".strip()
+
 		if distro in ("debian:7",):
 			frag += "\n" + """
-RUN sudo apt-get install -y python-pip
-RUN sudo apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev libgtk-3-dev
-RUN sudo apt-get install -y libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
-RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
+RUN apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev libgtk-3-dev
+RUN apt-get install -y libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+RUN apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
+			""".strip()
+
+		elif distro == "ubuntu:19.04":
+			frag += "\n" + """
+RUN apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev
+RUN apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+#RUN apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 			""".strip()
 
 		elif distro.startswith(("debian", "ubuntu")):
 			frag += "\n" + """
-RUN sudo apt-get install -y python-pip
-RUN sudo apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev
-RUN sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
-RUN sudo apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
+RUN apt-get install -y libgtkmm-3.0-dev libgtkglext1-dev
+RUN apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+RUN apt-get install -y libwebkitgtk-3.0-dev libwebkitgtk-dev
 			""".strip()
 
-		elif distro in ("fedora:27","fedora:28","fedora:29"):
+		elif distro in ("fedora:27","fedora:28","fedora:29", "fedora:30"):
 			frag += "\n" + """
-RUN sudo dnf install -y python-pip python-devel
-RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
-RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
-RUN sudo dnf install -y webkitgtk4-devel
+RUN dnf install -y gtkmm30-devel gtkglext-devel
+RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
+RUN dnf install -y webkitgtk4-devel
 			""".strip()
 
-		elif distro.startswith("fedora"):
+		elif distro in ("fedora:26",):
 			frag += "\n" + """
-RUN sudo dnf install -y python-pip python-devel
-RUN sudo dnf install -y gtkmm30-devel gtkglext-devel
-RUN sudo dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
-RUN sudo dnf install -y webkitgtk3-devel webkitgtk-devel
+RUN dnf install -y gtkmm30-devel gtkglext-devel freeglut-devel
+RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel
+RUN dnf install -y webkitgtk3-devel webkitgtk-devel
 			""".strip()
-
 		elif distro.startswith("centos"):
 			frag += "\n" + """
-RUN sudo yum install -y epel-release
-RUN sudo yum install -y python-pip python-devel
-RUN sudo yum install -y gtkmm30-devel gtkglext-devel freeglut-devel
-RUN sudo yum install -y gstreamer1-devel gstreamer1-plugins-base-devel
-RUN sudo yum install -y webkitgtk3-devel webkitgtk-devel
+RUN yum install -y gtkmm30-devel gtkglext-devel freeglut-devel
+RUN yum install -y gstreamer1-devel gstreamer1-plugins-base-devel
+RUN yum install -y webkitgtk3-devel webkitgtk-devel
 			""".strip()
 
 	if install_fsl:
 		if distro.startswith("fedora"):
 			frag += "\n" + """
-RUN sudo dnf install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
+RUN dnf install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
 			""".strip()
 		elif distro.startswith("centos"):
 			frag += "\n" + """
-RUN sudo yum install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
+RUN yum install -y expat-devel libX11-devel mesa-libGL-devel zlib-devel
 			""".strip()
 		elif distro.startswith(("ubuntu", "debian")):
 			frag += "\n" + """
-RUN sudo apt-get install -y libexpat1-dev libx11-dev zlib1g-dev libgl1-mesa-dev
+RUN apt-get install -y libexpat1-dev libx11-dev zlib1g-dev libgl1-mesa-dev
 			""".strip()
 
 	frag += "\n" + """
@@ -199,6 +266,13 @@ ENV HOME /home/sct
 WORKDIR /home/sct
 EXPOSE 22
 	""".strip()
+
+	if proxy:
+		frag += "\n" + """
+ENV https_proxy=http://zougloub.eu:3128 http_proxy=http://zougloub.eu:3128 HTTPS_PROXY=http://zougloub.eu:3128 HTTP_PROXY=http://zougloub.eu:3128
+ENV REQUESTS_CA_BUNDLE=${CERTDIR}/zougloub.eu.pem
+		""".strip()
+
 
 	if install_tools:
 		if distro.startswith("fedora"):
@@ -214,15 +288,39 @@ RUN sudo yum install -y psmisc net-tools
 RUN sudo apt-get install -y psmisc net-tools
 			""".strip()
 
-	if re.match(r"^\d+\.\d+\.\d+$", version):
-		sct_dir = "/home/sct/sct_{}".format(version)
+	if 1:
+		if distro.startswith("fedora"):
+			frag += "\n" + """
+RUN sudo dnf install -y git
+			""".strip()
+		elif distro.startswith("centos"):
+			frag += "\n" + """
+RUN sudo yum install -y git
+			""".strip()
+		elif distro.startswith(("ubuntu", "debian")):
+			frag += "\n" + """
+RUN sudo apt-get install -y git
+			""".strip()
+
+	if proxy:
+		if distro in ("debian:8",):
+			frag += "\n" + """
+RUN git config --global http.sslCAInfo /etc/ssl/certs/zougloub.eu.pem
+			""".strip()
+
+	m = re.match(r"^(?P<v>v)?(?P<pv>\d+\.\d+\.\d+(-beta\.\d+)?)$", version)
+	if m is not None:
+		dirv = m.group("pv")
+		dl_fn = version # if version.startswith("v") else "v{}".format(version)
+		sct_dir = "/home/sct/sct_{}".format(dirv)
 		frag += "\n" + """
-RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/v{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}
+RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{dl_fn}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{dirv} && sed -i -e 's/conda install/conda --insecure install/g'  -e "s@pip install@pip --trusted-host pypi.org --trusted-host pythonhosted.org --cert ${{CERTDIR}}/zougloub.eu.pem install@g" install_sct && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{dirv}
 		""".strip().format(**locals())
 	else:
+		dirv = version
 		sct_dir = "/home/sct/sct_dev"
 		frag += "\n" + """
-RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{version}* && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{version}*
+RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{version}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{dirv}* && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{dirv}*
 		""".strip().format(**locals())
 
 	frag += "\n" + """
@@ -240,8 +338,8 @@ RUN bash -i -c "sct_download_data -d sct_testing_data"
 		if distro in ("debian:8", "ubuntu:14.04"):
 			frag += "\n" + """
 # Install more fsleyes dependencies
-RUN bash -i -c "sudo apt-get install -y python-dev"
-#RUN bash -i -c "sudo apt-get install -y python-numpy python-scipy python-matplotlib"
+RUN bash -i -c "sudo apt-get install -y python3 python3-dev"
+RUN bash -i -c "sudo apt-get install -y python3-pip"
 RUN bash -i -c "sudo apt-get install -y liblapack-dev"
 RUN bash -i -c "sudo apt-get install -y gfortran"
 
@@ -250,21 +348,14 @@ RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
 
 # for matplotlib wxagg support
 #RUN bash -i -c "sudo apt-get install -y python-wxgtk3.0"
-
-# can't use system packages as they'd get updated
-RUN bash -i -c "pip install --user --upgrade pip"
-RUN bash -i -c "pip install --user --upgrade setuptools"
-RUN bash -i -c "pip install --user --upgrade numpy"
-RUN bash -i -c "pip install --user --upgrade scipy"
-RUN bash -i -c "pip install --user --upgrade Pillow"
-RUN bash -i -c "pip install --user --upgrade wxPython"
+ENV PYTHON python3
 			""".strip()
 
-		if distro in ("debian:7",):
+		elif distro in ("debian:7", "debian:8", "debian:9") or distro.startswith("ubuntu"):
 			frag += "\n" + """
 # Install more fsleyes dependencies
-RUN bash -i -c "sudo apt-get install -y python-dev"
-#RUN bash -i -c "sudo apt-get install -y python-numpy python-scipy python-matplotlib"
+RUN bash -i -c "sudo apt-get install -y python3-dev"
+RUN bash -i -c "sudo apt-get install -y python3-pip"
 RUN bash -i -c "sudo apt-get install -y liblapack-dev"
 RUN bash -i -c "sudo apt-get install -y gfortran"
 
@@ -274,22 +365,68 @@ RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
 # for matplotlib wxagg support
 #RUN bash -i -c "sudo apt-get install -y python-wxgtk3.0"
 
+ENV PYTHON python3
+			""".strip()
+
+		elif distro.startswith("fedora"):
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN bash -i -c "sudo dnf install -y python3 python3-devel"
+ENV PYTHON python3
+RUN ${PYTHON} --version
+RUN which ${PYTHON}
+RUN echo ${PATH}
+			""".strip()
+
+		if distro in ("centos:7",):
+			# https://linuxize.com/post/how-to-install-python-3-on-centos-7/
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN bash -i -c "sudo yum install -y centos-release-scl"
+RUN bash -i -c "sudo yum install -y rh-python36"
+RUN bash -i -c "scl enable rh-python36 bash; which python"
+RUN bash -i -c "mkdir -p ~/.local/bin"
+RUN bash -i -c "ln -sf /opt/rh/rh-python36/root/usr/bin/python ~/.local/bin/python3"
+ENV PYTHON /opt/rh/rh-python36/root/usr/bin/python
+			""".strip()
+
+		if proxy and False:
+			# unneeded due to REQUESTS_CA_BUNDLE
+			frag += "\n" + """
+ENV PIP ${PYTHON} -m pip --cert ${CERTDIR}/zougloub.eu.pem
+			""".strip()
+		else:
+			frag += "\n" + """
+ENV PIP ${PYTHON} -m pip
+			""".strip()
+
+		if distro in ("centos:7",):
+			# https://linuxize.com/post/how-to-install-python-3-on-centos-7/
+			frag += "\n" + """
+RUN bash -i -c "echo 'PATH=\"${HOME}/.local/bin:${PATH}\"' >> ~/.bashrc"
+			""".strip()
+		else:
+			frag += "\n" + """
+RUN bash -i -c "echo 'PATH+=:~/.local/bin' >> ~/.bashrc"
+			""".strip()
+
+		if 1:
+			frag += "\n" + """
 # can't use system packages as they'd get updated
-RUN bash -i -c "sudo pip install --upgrade https://github.com/pypa/pip/archive/72f219c410b0ce25f7da44be6172c1e3766bbe6b.zip"
-RUN bash -i -c "pip install --user --upgrade pip"
-RUN bash -i -c "pip install --user --upgrade setuptools"
-RUN bash -i -c "pip install --user --upgrade numpy"
-RUN bash -i -c "pip install --user --upgrade scipy"
-RUN bash -i -c "pip install --user --upgrade Pillow"
-RUN bash -i -c "pip install --user --upgrade wxPython"
+RUN bash -i -c "${PIP} install --user --upgrade pathlib2"
+RUN bash -i -c "${PIP} install --user --upgrade pip"
+RUN bash -i -c "${PIP} install --user --upgrade setuptools"
+RUN bash -i -c "${PIP} install --user --upgrade numpy"
+RUN bash -i -c "${PIP} install --user --upgrade scipy"
+RUN bash -i -c "${PIP} install --user --upgrade Pillow"
+RUN bash -i -c "${PIP} install --user --upgrade wxPython"
 # :| wxPython/ext/wxWidgets/src/gtk/settings.cpp:260:29: error: 'GTK_TYPE_HEADER_BAR' was not declared in this scope
+RUN bash -i -c "${PIP} install --user --upgrade cython"
 			""".strip()
 
 		frag += "\n" + """
-#RUN bash -i -c "$SCT_DIR/python/bin/pip install fsleyes"
-RUN bash -i -c "pip install --user fsleyes"
-RUN bash -i -c "echo 'PATH+=:~/.local/bin' >> ~/.bashrc"
-		""".strip()
+RUN bash -i -c "${PIP} install --user fsleyes"
+			""".strip()
 
 	if install_fsl:
 		# TODO WIP
