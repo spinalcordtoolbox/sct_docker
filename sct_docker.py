@@ -308,6 +308,75 @@ RUN sudo apt-get install -y git
 RUN git config --global http.sslCAInfo /etc/ssl/certs/zougloub.eu.pem
 			""".strip()
 
+
+	install_python = install_fsleyes
+	install_python = True
+
+	if install_python:
+		if distro in ("debian:8", "ubuntu:14.04"):
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN sudo apt-get install -y python3 python3-dev
+RUN sudo apt-get install -y python3-pip
+RUN sudo apt-get install -y liblapack-dev
+RUN sudo apt-get install -y gfortran
+
+# for pillow
+RUN sudo apt-get install -y libjpeg-dev
+
+
+ENV PYTHON python3
+
+RUN mkdir -p ~/.local/bin
+RUN ln -sf $(which ${PYTHON}) ~/.local/bin/python
+			""".strip()
+
+		elif distro in ("debian:7", "debian:8", "debian:9") or distro.startswith("ubuntu"):
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN sudo apt-get install -y python3-dev
+RUN sudo apt-get install -y python3-pip
+RUN sudo apt-get install -y liblapack-dev
+RUN sudo apt-get install -y gfortran
+
+# for pillow
+RUN sudo apt-get install -y libjpeg-dev
+
+ENV PYTHON python3
+
+RUN mkdir -p ~/.local/bin
+RUN ln -sf $(which ${PYTHON}) ~/.local/bin/python
+			""".strip()
+
+		elif distro.startswith("fedora"):
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN sudo dnf install -y python3 python3-devel
+ENV PYTHON python3
+RUN ${PYTHON} --version
+RUN which ${PYTHON}
+RUN echo ${PATH}
+			""".strip()
+
+		if distro in ("centos:7",):
+			# https://linuxize.com/post/how-to-install-python-3-on-centos-7/
+			frag += "\n" + """
+# Install more fsleyes dependencies
+RUN sudo yum install -y centos-release-scl
+RUN sudo yum install -y rh-python36
+RUN scl enable rh-python36 bash; which python
+RUN mkdir -p ~/.local/bin
+RUN ln -sf /opt/rh/rh-python36/root/usr/bin/python ~/.local/bin/python3
+ENV PYTHON /opt/rh/rh-python36/root/usr/bin/python
+			""".strip()
+
+		if 1:
+			frag += "\n" + """
+SHELL ["/bin/bash", "-c"]
+RUN echo 'PATH=\"${PATH}:${HOME}/.local/bin\"' >> ~/.bashenv
+ENV BASH_ENV ~/.bashenv
+			""".strip()
+
 	m = re.match(r"^(?P<v>v)?(?P<pv>\d+\.\d+\.\d+(-beta\.\d+)?)$", version)
 	if m is not None:
 		dirv = m.group("pv")
@@ -337,57 +406,20 @@ RUN bash -i -c "sct_download_data -d sct_testing_data"
 
 		if distro in ("debian:8", "ubuntu:14.04"):
 			frag += "\n" + """
-# Install more fsleyes dependencies
-RUN bash -i -c "sudo apt-get install -y python3 python3-dev"
-RUN bash -i -c "sudo apt-get install -y python3-pip"
-RUN bash -i -c "sudo apt-get install -y liblapack-dev"
-RUN bash -i -c "sudo apt-get install -y gfortran"
-
-# for pillow
-RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
-
 # for matplotlib wxagg support
-#RUN bash -i -c "sudo apt-get install -y python-wxgtk3.0"
-ENV PYTHON python3
 			""".strip()
 
 		elif distro in ("debian:7", "debian:8", "debian:9") or distro.startswith("ubuntu"):
 			frag += "\n" + """
-# Install more fsleyes dependencies
-RUN bash -i -c "sudo apt-get install -y python3-dev"
-RUN bash -i -c "sudo apt-get install -y python3-pip"
-RUN bash -i -c "sudo apt-get install -y liblapack-dev"
-RUN bash -i -c "sudo apt-get install -y gfortran"
-
-# for pillow
-RUN bash -i -c "sudo apt-get install -y libjpeg-dev"
-
-# for matplotlib wxagg support
-#RUN bash -i -c "sudo apt-get install -y python-wxgtk3.0"
-
-ENV PYTHON python3
 			""".strip()
 
 		elif distro.startswith("fedora"):
 			frag += "\n" + """
-# Install more fsleyes dependencies
-RUN bash -i -c "sudo dnf install -y python3 python3-devel"
-ENV PYTHON python3
-RUN ${PYTHON} --version
-RUN which ${PYTHON}
-RUN echo ${PATH}
 			""".strip()
 
 		if distro in ("centos:7",):
 			# https://linuxize.com/post/how-to-install-python-3-on-centos-7/
 			frag += "\n" + """
-# Install more fsleyes dependencies
-RUN bash -i -c "sudo yum install -y centos-release-scl"
-RUN bash -i -c "sudo yum install -y rh-python36"
-RUN bash -i -c "scl enable rh-python36 bash; which python"
-RUN bash -i -c "mkdir -p ~/.local/bin"
-RUN bash -i -c "ln -sf /opt/rh/rh-python36/root/usr/bin/python ~/.local/bin/python3"
-ENV PYTHON /opt/rh/rh-python36/root/usr/bin/python
 			""".strip()
 
 		if proxy and False:
@@ -404,24 +436,20 @@ ENV PIP ${PYTHON} -m pip
 			# https://linuxize.com/post/how-to-install-python-3-on-centos-7/
 			frag += "\n" + """
 RUN bash -i -c "echo 'PATH=\"${HOME}/.local/bin:${PATH}\"' >> ~/.bashrc"
-			""".strip()
-		else:
-			frag += "\n" + """
-RUN bash -i -c "echo 'PATH+=:~/.local/bin' >> ~/.bashrc"
-			""".strip()
+			""".strip() # TODO
 
 		if 1:
 			frag += "\n" + """
 # can't use system packages as they'd get updated
-RUN bash -i -c "${PIP} install --user --upgrade pathlib2"
-RUN bash -i -c "${PIP} install --user --upgrade pip"
-RUN bash -i -c "${PIP} install --user --upgrade setuptools"
-RUN bash -i -c "${PIP} install --user --upgrade numpy"
-RUN bash -i -c "${PIP} install --user --upgrade scipy"
-RUN bash -i -c "${PIP} install --user --upgrade Pillow"
-RUN bash -i -c "${PIP} install --user --upgrade wxPython"
+RUN ${PIP} install --user --upgrade pathlib2
+RUN ${PIP} install --user --upgrade pip
+RUN ${PIP} install --user --upgrade setuptools
+RUN ${PIP} install --user --upgrade numpy
+RUN ${PIP} install --user --upgrade scipy
+RUN ${PIP} install --user --upgrade Pillow
+RUN ${PIP} install --user --upgrade wxPython
 # :| wxPython/ext/wxWidgets/src/gtk/settings.cpp:260:29: error: 'GTK_TYPE_HEADER_BAR' was not declared in this scope
-RUN bash -i -c "${PIP} install --user --upgrade cython"
+RUN ${PIP} install --user --upgrade cython
 			""".strip()
 		if 1:
 			frag += "\n" + """
@@ -430,7 +458,7 @@ RUN git clone https://github.com/mcfletch/pyopengl && cd pyopengl && ${PIP} inst
 			""".strip()
 
 		frag += "\n" + """
-RUN bash -i -c "${PIP} install --user fsleyes"
+RUN ${PIP} install --user fsleyes
 			""".strip()
 
 	if install_fsl:

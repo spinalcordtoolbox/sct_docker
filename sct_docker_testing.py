@@ -50,9 +50,14 @@ def run_test(distros=None, version=None, commands=None, jobs=None):
 	for distro in distros:
 		name = "sct-testing-{}-{}-{}".format(distro.replace(":", "-"), version, datetime.datetime.now().strftime("%Y%m%d%H%M%S")).lower()
 
-		name = sct_docker.generate(distro=distro, version=version, commands=commands,
-		 name=name, configure_ssh=False,
+		name = sct_docker.generate(
+		 distro=distro,
+		 version=version,
+		 commands=commands,
+		 name=name,
+		 configure_ssh=False,
 		 verbose=False,
+		 install_compilers=True,
 		)
 
 		names.append(name)
