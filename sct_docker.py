@@ -423,6 +423,11 @@ RUN bash -i -c "${PIP} install --user --upgrade wxPython"
 # :| wxPython/ext/wxWidgets/src/gtk/settings.cpp:260:29: error: 'GTK_TYPE_HEADER_BAR' was not declared in this scope
 RUN bash -i -c "${PIP} install --user --upgrade cython"
 			""".strip()
+		if 1:
+			frag += "\n" + """
+# Workaround https://github.com/mcfletch/pyopengl/issues/11
+RUN git clone https://github.com/mcfletch/pyopengl && cd pyopengl && ${PIP} install --user --upgrade . && cd accelerate && ${PIP} install --user --upgrade .
+			""".strip()
 
 		frag += "\n" + """
 RUN bash -i -c "${PIP} install --user fsleyes"
