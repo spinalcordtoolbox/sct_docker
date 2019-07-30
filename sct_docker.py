@@ -67,31 +67,43 @@ FROM {distro}
 		frag += "\n" + """
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update
-RUN apt-get install -y curl ca-certificates
-ENV CERTDIR=/etc/ssl/certs
-ENV CERTECHO=echo
+RUN apt-get install -y curl
 	""".strip()
 
 	elif distro in ("centos:6", "centos:7",):
 		frag += "\n" + """
 RUN yum update -y
-
-RUN yum install -y curl ca-certificates
-ENV CERTDIR=/etc/pki/ca-trust/source/anchors
-ENV CERTECHO="echo -e"
+RUN yum install -y curl
 		""".strip()
 
 	elif distro.startswith(("fedora", "centos")):
 		frag += "\n" + """
 RUN dnf update -y
-
-RUN dnf install -y curl ca-certificates
-
-ENV CERTDIR=/etc/pki/ca-trust/source/anchors
-ENV CERTECHO="echo -e"
+RUN dnf install -y curl
 		""".strip()
 
 	if proxy:
+		if distro.startswith(("debian", "ubuntu")):
+			frag += "\n" + """
+RUN apt-get install -y ca-certificates
+ENV CERTDIR=/etc/ssl/certs
+ENV CERTECHO=echo
+		""".strip()
+
+		elif distro in ("centos:6", "centos:7",):
+			frag += "\n" + """
+RUN yum install -y ca-certificates
+ENV CERTDIR=/etc/pki/ca-trust/source/anchors
+ENV CERTECHO="echo -e"
+			""".strip()
+
+		elif distro.startswith(("fedora", "centos")):
+			frag += "\n" + """
+RUN dnf install -y ca-certificates
+ENV CERTDIR=/etc/pki/ca-trust/source/anchors
+ENV CERTECHO="echo -e"
+			""".strip()
+
 		# Use CA certificate for local ssl_bump proxy
 		frag += "\n" + """
 RUN ${CERTECHO} "-----BEGIN CERTIFICATE-----\\nMIIDyTCCArGgAwIBAgIJAKF6rNGHC1AeMA0GCSqGSIb3DQEBCwUAMHsxCzAJBgNV\\nBAYTAkNBMQ8wDQYDVQQIDAZRdWViZWMxETAPBgNVBAcMCE1vbnRyZWFsMQ0wCwYD\\nVQQKDARub25lMRQwEgYDVQQDDAt6b3VnbG91Yi5ldTEjMCEGCSqGSIb3DQEJARYU\\nY0otc3F1aWRAem91Z2xvdWIuZXUwHhcNMTkwNzI3MjMwMzA1WhcNMjAwNzI2MjMw\\nMzA1WjB7MQswCQYDVQQGEwJDQTEPMA0GA1UECAwGUXVlYmVjMREwDwYDVQQHDAhN\\nb250cmVhbDENMAsGA1UECgwEbm9uZTEUMBIGA1UEAwwLem91Z2xvdWIuZXUxIzAh\\nBgkqhkiG9w0BCQEWFGNKLXNxdWlkQHpvdWdsb3ViLmV1MIIBIjANBgkqhkiG9w0B\\nAQEFAAOCAQ8AMIIBCgKCAQEAwyt/Iv5PE6hbWngoIDAY3zKh1V9luuyfweSs4/tg\\nz5btY1j+PqMOl2MpcYsVW7+HwqJq5E6jn2qMPA94XwfnylQqUL/rpC+90Lt964k0\\nVhQi5FhQkyW3R5WaN03cn2xyj4wsiSyPDP61274DpkymhXflCYsKp0Ta3C8VUV8U\\nPqEpzWwPdfi4Ej5XFidXGKdeE6JZftypFK2wyIA+cwbZE/MP7pp6BvoyIJsV5duq\\njF9ByhAtdka8B8IzBVtp87HjeT7MHAjHtrzddaW/s8Dfnr4HkQb+t2ZBDxlUDvWY\\n0jERTcToobfXU3TjRMPriQnbb4cDfbbbqUKucUw2c8aXaQIDAQABo1AwTjAdBgNV\\nHQ4EFgQU9PnADlRycQCVXhOaGre9oF6WrHswHwYDVR0jBBgwFoAU9PnADlRycQCV\\nXhOaGre9oF6WrHswDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAFPlT\\nZBs2zOI7CiNixIO7G3QFQKRUheFAQMll0w9FXQW+3aB7TcKtsu6iR0oIPoXx50G8\\nX1uaxi9CidO98yI1QLvnxZlumvX9peRooFryyUGrzN8Fiy8hdTtuS9KNzWDgVApj\\nIcqYr53RM/jzIS4AHRwaau8wrWaoiys3wvHKhNL9EH5I7WzKHS0elrjW5Mn4Ew0i\\n3gQ+rQ5VoL0Ljm8GA2EJQ9gzecdvShMuXAMFokte0BRvYwHEM4+mkGVoTdPrN/pf\\n2xnk91vA0AQnYbrottxGIpL9WwRSjyz8qQv/Nw8S2ohauJz3aDXcUNXOCm6RZ7Vl\\noSqg2oypaL1o9/b20g==\\n-----END CERTIFICATE-----" > ${CERTDIR}/zougloub.eu.pem
@@ -383,7 +395,7 @@ ENV BASH_ENV ~/.bashenv
 		dl_fn = version # if version.startswith("v") else "v{}".format(version)
 		sct_dir = "/home/sct/sct_{}".format(dirv)
 		frag += "\n" + """
-RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{dl_fn}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{dirv} && sed -i -e 's/conda install/conda --insecure install/g'  -e "s@pip install@pip --trusted-host pypi.org --trusted-host pythonhosted.org --cert ${{CERTDIR}}/zougloub.eu.pem install@g" install_sct && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{dirv}
+RUN curl --location https://github.com/neuropoly/spinalcordtoolbox/archive/{dl_fn}.tar.gz | gunzip | tar x && cd spinalcordtoolbox-{dirv} && yes | ./install_sct && cd - && rm -rf spinalcordtoolbox-{dirv}
 		""".strip().format(**locals())
 	else:
 		dirv = version
