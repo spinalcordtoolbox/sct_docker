@@ -164,7 +164,13 @@ Usage
 #. Connect to it using Xming/SSH if X forwarding is needed
    (eg. running FSLeyes from there):
 
-   Clone the current repository & run (double click) ``windows/sct-win.xlaunch``. If you are using docker toolbox then then
+   Open a new CMD window and clone this repository:
+
+   .. code:: sh
+   
+   git clone https://github.com/neuropoly/sct_docker.git
+
+   If you are using Docker Desktop, run (double click) ``windows/sct-win.xlaunch``. If you are using Docker Toolbox, 
    run ``windows/sct-win_docker_toolbox.xlaunch``
 
    If this is the first time you have done this procedure, the system
