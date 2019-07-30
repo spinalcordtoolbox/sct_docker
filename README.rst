@@ -168,7 +168,7 @@ Usage
 
    .. code:: sh
    
-   git clone https://github.com/neuropoly/sct_docker.git
+      git clone https://github.com/neuropoly/sct_docker.git
 
    If you are using Docker Desktop, run (double click) ``windows/sct-win.xlaunch``. If you are using Docker Toolbox, 
    run ``windows/sct-win_docker_toolbox.xlaunch``
