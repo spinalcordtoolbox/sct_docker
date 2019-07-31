@@ -134,14 +134,14 @@ Usage
 
 #. Start throw-away container on the image.
 
-   - If you are using Docker toolbox open Docker Quickstart Terminal
+   - If you are using Docker Toolbox, open Docker Quickstart Terminal
      wait until get a prompt and write:
 
      .. code:: sh
 
         docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
-   - If running the standard docker, run:
+   - If running Docker Desktop, run a different command:
 
      .. code:: sh
 
@@ -167,10 +167,10 @@ Usage
    Open a new CMD window and clone this repository:
 
    .. code:: sh
-   
+
       git clone https://github.com/neuropoly/sct_docker.git
 
-   If you are using Docker Desktop, run (double click) ``windows/sct-win.xlaunch``. If you are using Docker Toolbox, 
+   If you are using Docker Desktop, run (double click) ``windows/sct-win.xlaunch``. If you are using Docker Toolbox,
    run ``windows/sct-win_docker_toolbox.xlaunch``
 
    If this is the first time you have done this procedure, the system
@@ -186,10 +186,26 @@ Usage
    LXterminal and FSLeyes should open, depending on how fast your
    computer is FSLeyes may take a few seconds to open.
 
-   Note: If after closing a program with graphical interface (i.e. FSLeyes)
-   LXterminal does not raise the shell ($) prompt then press Ctrl + C
-   to finish closing the program.
+   Notes:
 
+   - If after closing a program with graphical interface (i.e. FSLeyes)
+     LXterminal does not raise the shell ($) prompt then press Ctrl + C
+     to finish closing the program.
+
+   - Docker exposes the forwarded SSH server at different endpoints
+     depending on whether Docker Desktop or Docker Toolbox is installed.
+
+     Docker Desktop:
+
+     .. code:: sh
+
+        ssh -Y -p 2222 sct@127.0.0.1
+
+     Docker Toolbox:
+
+     .. code:: sh
+
+        ssh -Y -p 2222 sct@192.168.99.100
 
 
 
