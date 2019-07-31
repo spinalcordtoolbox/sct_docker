@@ -79,7 +79,7 @@ Installation
      .. code:: sh
 
         docker pull neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
-        
+
      Note: to list all available images on the registery, please see `Generation and distribution`_.
 
    - Local, from a downloaded archive
@@ -125,8 +125,8 @@ Installation
    #. If running Docker for Windows, click the Docker tray icon,
       run settings and allow sharing of your `C:` drive with the container,
       so as to allow access to the path.
-      
-#. Finally, reboot your computer after the installation. 
+
+#. Finally, reboot your computer after the installation.
    (Or you might end up with issues afterwards such as ``ssh: connect to host localhost port 2222: Cannot assign requested adress`` )
 
 Usage
@@ -189,7 +189,7 @@ Usage
    Note: If after closing a program with graphical interface (i.e. FSLeyes)
    LXterminal does not raise the shell ($) prompt then press Ctrl + C
    to finish closing the program.
-   
+
 
 
 
@@ -247,7 +247,7 @@ Usage
 
    .. code:: sh
 
-      ssh -Y sct@localhost:2222
+      ssh -Y -p 2222 sct@localhost
 
 #. Then enjoy SCT ;)
 
