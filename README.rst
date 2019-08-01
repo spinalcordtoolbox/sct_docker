@@ -209,8 +209,8 @@ Usage
 
 
 
-Docker for Unix like OSes (GNU/Linux, BSD family, MacOS)
-########################################################
+Docker for UNIX (GNU/Linux, BSD family, MacOS)
+##############################################
 
 
 Installation
@@ -232,6 +232,13 @@ Installation
      .. code:: sh
 
         docker load --input sct-v4.0.0-beta.0-ubuntu-18.04.tar
+
+#. If you are on OSX and you need X forwarding (e.g. to run FSLeyes from the ssh window), install `Xquartz <https://www.xquartz.org/>`_.
+   After installing Xquartz and after rebooting, run this command to prevent `this issue <https://github.com/neuropoly/sct_docker/issues/29>`_:
+
+   .. code:: sh
+   
+      defaults write org.macosforge.xquartz.X11 enable_iglx -bool true
 
 
 Usage
@@ -264,7 +271,7 @@ Usage
    .. code:: sh
 
       ssh -Y -p 2222 sct@localhost
-
+   
 #. Then enjoy SCT ;)
 
 
