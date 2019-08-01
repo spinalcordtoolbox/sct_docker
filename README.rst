@@ -336,22 +336,19 @@ Example: creation of all distros container images:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --version 3.2.4
+   ./sct_docker_images.py generate --version v3.2.4
 
 Example: creation of offline archive tarball:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --version 3.2.4 \
-    --distros ubuntu:18.04 \
-    --generate-distro-specific-sct-tarball
+   ./sct_docker_images.py generate --version v3.2.4 --distros ubuntu:18.04 --generate-distro-specific-sct-tarball
 
 Example: creation and distribution:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --version 3.2.4 \
-   --publish-under neuropoly/sct
+   ./sct_docker_images.py generate --version v3.2.4 --publish-under neuropoly/sct
 
 
 Notes
