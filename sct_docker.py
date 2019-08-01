@@ -3,6 +3,7 @@
 
 import sys, io, os, re, logging, time, datetime, shutil
 
+logger = logging.getLogger(__name__)
 
 if sys.hexversion < 0x03030000:
 	import pipes
@@ -530,7 +531,7 @@ RUN echo Finished
 		f.write(frag.encode("utf-8"))
 
 	if verbose:
-		logging.info("You can now run: docker build -t %s %s", name, name)
+		logger.info("You can now run: docker build -t %s %s", name, name)
 
 	return name
 

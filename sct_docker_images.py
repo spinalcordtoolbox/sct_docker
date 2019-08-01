@@ -118,7 +118,7 @@ def generate(distros=None, version=None,
 		for (name, _), promise in zip(names, res):
 			err = promise.get()
 			if err != 0:
-				logging.error("{} failed with error code {}".format(name, err))
+				logger.error("{} failed with error code {}".format(name, err))
 			errs.append(err)
 
 		pool.close()
@@ -130,13 +130,13 @@ def generate(distros=None, version=None,
 	failed = False
 	for (name,_), err in zip(names, errs):
 		if err == 0:
-			logging.info("{} finished successfully".format(name))
+			logger.info("{} finished successfully".format(name))
 		else:
-			logging.error("{} failed with error code {}".format(name, err))
+			logger.error("{} failed with error code {}".format(name, err))
 			failed = True
 
 	if failed:
-		logging.error("Not proceeding further as one distro failed: %s", errs)
+		logger.error("Not proceeding further as one distro failed: %s", errs)
 		raise RuntimeError("Failed generating one distro")
 
 	if proxy:
