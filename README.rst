@@ -165,8 +165,11 @@ Usage
 	
       if not : 
       - check the permission on your local host file :
+
       - go to C:/Users/
+
 	    - right click on the folder open properties of the folder.
+
 	    - go to the security tab 
 		
 	    - Check that the USER have full control over the folder.
@@ -199,7 +202,7 @@ Usage
 
 			.. image:: picture/screenshot1.PNG
 
-			click setting > shared folder and on the folder with a '+' sign
+		   click setting > shared folder and on the folder with a '+' sign
 
 			.. image:: picture/screenshot2.PNG
  
