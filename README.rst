@@ -189,7 +189,7 @@ Usage
 	
 		
 	- Go to the docker quickstart terminal
-		Stop Docker Machine if it's running, by running command:
+	     Stop Docker Machine if it's running, by running command:
 
 		.. code:: sh 
 
@@ -197,16 +197,15 @@ Usage
 
 		Open VirtualBox GUI 
 		
-		add a shared folder in the default machine setting :
-			.. image:: ./picture/screenshot1.PNG
-			click setting > shared folder and
-			 on the folder with a '+' sign
-			.. image:: ./picture/screenshot2.PNG
+	      add a shared folder in the default machine setting :
+		.. image:: ./picture/screenshot1.PNG
+		click setting > shared folder and on the folder with a '+' sign
+		.. image:: ./picture/screenshot2.PNG
  
-			Write C:\Users\docker_shared_folder 
-			Write docker_shared_folder in Name textbox
-			check Make Permanent and mount automatically boxes.
-			.. image:: /picture/screenshot3.PNG 
+		Write C:\Users\docker_shared_folder 
+		Write docker_shared_folder in Name textbox
+		Check Make Permanent and mount automatically boxes.
+		s.. image:: /picture/screenshot3.PNG 
  
 		Go back to docker quickstart terminal. 
 		Restart Docker Machine, by running command :
@@ -234,7 +233,7 @@ Usage
 
  			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-		sudo password is sct unless you've changed it before.s
+		sudo password is sct unless you've changed it before
 		
 		then launch the container by running :
  
