@@ -149,42 +149,43 @@ Usage
    the changes made to it will be visible for both the Docker
    container and the Windows system.
 
-#.  Check the shared folder :
+#.  Check the shared folder:
 
     - run command
 
-    .. code:: sh
+       .. code:: sh
 
-	ls
+	  ls
 
-    - the docker_shared_folder should be highlighted in green : 
-	.. image:: /picture/screenshot_green.PNG
+    - the docker_shared_folder should be highlighted in green :
+ 
+	.. image:: picture/screenshot_green.PNG
 	
       if not : 
-	- check the permission on your local host file :
-	    - go to C:/Users/
+      - check the permission on your local host file :
+      - go to C:/Users/
 	    - right click on the folder open properties of the folder.
 	    - go to the security tab 
 		
 	    - Check that the USER have full control over the folder.
 
-	    .. image:: /picture/permission1.png
+	    	.. image:: picture/permission1.png
 
 	    - if yes move on to next paragraph.
 
 	    - if not change the permission and run the ls command again in the docker quickstart terminal. 
 	    - if the folder is highlighted in green try creating a folder inside it.
 
-	    .. code:: sh
+	    	.. code:: sh
 
-		mkdir test
+		     mkdir test
 
 	    - Check if a new folder appeared in C:/Users/docker_folder_shared
 	
 		
 	- Go to the docker quickstart terminal
 
-		- Stop Docker Machine if it's running, by running command:
+	- Stop Docker Machine if it's running, by running command:
 
 		.. code:: sh 
 
@@ -194,11 +195,11 @@ Usage
 		
 		- add a shared folder in the default machine setting :
 
-			.. image:: ./picture/screenshot1.PNG
+			.. image:: picture/screenshot1.PNG
 
 			click setting > shared folder and on the folder with a '+' sign
 
-			.. image:: ./picture/screenshot2.PNG
+			.. image:: picture/screenshot2.PNG
  
 			- Write C:\Users\docker_shared_folder in folder path
 
