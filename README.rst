@@ -56,13 +56,11 @@ Installation
 
 #. Install Docker:
 
-   If you are on Windows 10 Pro/Enterprise: Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ 
+   - If you are on Windows 10 Pro/Enterprise: Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ 
    
-   If you are on Windows XP/VISTA/7/8/8.1/10 others than
-Pro/Enterprise: Install `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_.
+   - If you are on Windows XP/VISTA/7/8/8.1/10 others than Pro/Enterprise: Install `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_.
 
-   See this `tutorial
-<https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker.
+   See this `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker.
 
 #. Fetch the SCT image
 
