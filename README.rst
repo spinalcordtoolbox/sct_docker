@@ -458,7 +458,8 @@ Example: creation of offline archive tarball:
 Example: creation and distribution:
 
 .. code:: sh
-
+   
+   docker login  # Make sure your account has push permission on neuropoly organization
    ./sct_docker_images.py generate --version v3.2.4 --publish-under neuropoly/sct
 
 
