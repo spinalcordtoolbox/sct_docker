@@ -171,19 +171,19 @@ Usage
 		
 	    Check that the USER have full control over the folder.
 
-		![permission1](/picture/permission1.png?raw=true )
+	    ![permission1](/picture/permission1.png?raw=true )
 
-		if yes move on to the point.
+	    if yes move on to the point.
 
-		if not change the permission and run the ls command again. 
-		if the folder is highlighted in green try creating a folder
-		inside it.
+	    if not change the permission and run the ls command again. 
+	    if the folder is highlighted in green try creating a folder
+	    inside it.
 
 		.. code:: sh
 
 			mkdir test
 
-		- Check if a new folder appeared in C:/Users/docker_folder_shared
+	- Check if a new folder appeared in C:/Users/docker_folder_shared
 	
 		
 	- Go to the docker quickstart terminal
