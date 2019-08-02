@@ -158,6 +158,7 @@ Usage
     - run command
     ..code:: sh
 	ls
+
     - the docker_shared_folder should be highlighted in green : 
 	
       if not : 
@@ -165,7 +166,9 @@ Usage
 	    go to C:/Users/
 	    right click on the folder open properties of the folder.
 	    go to the security tab 
+		
 	    Check that the USER have full control over the folder.
+		![permission1](/picture/permission1.png?raw=true )
 
 		if yes move on to the point.
 
@@ -175,7 +178,8 @@ Usage
 
 		..code:: sh
 			mkdir test
-		Check if a new folder appeared in C:/Users/docker_folder_shared
+
+		- Check if a new folder appeared in C:/Users/docker_folder_shared
 	
 		
 	- Go to the docker quickstart terminal
@@ -186,29 +190,40 @@ Usage
 		Open VirtualBox GUI 
 		
 		add a shared folder in the default machine setting :
-			click on default > setting > shared folder and
-			 on the folder with a + sign 
+			![image1](/picture/screenshot1.png?raw=true )
+			click setting > shared folder and
+			 on the folder with a '+' sign
+			![image2](/picture/screenshot2.png?raw=true )
+ 
 			Write C:\Users\docker_shared_folder 
 			Write docker_shared_folder in Name textbox
-
-			check permanent configuration and mount automatically. 
+			check permanent configuration and mount automatically boxes.
+			![image3](/picture/screenshot3.png?raw=true )
+ 
 		Go back to docker quickstart terminal. 
 		Restart Docker Machine, by running command :
+
 		..code:: sh 
 			 docker-machine start
+
 		SSH into the Docker Machine, by running command 
+
 		..code:: sh
 			docker-machine ssh
+
 		creat a new directory there by running :
+
 		..code:: sh 
 			mkdir docker_shared_folder
 
 		This will be /home/docker/docker_shared_folder.
 		Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
+
 		..code::sh
  		sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-		To launch the container run : 
+		then launch the container by running :
+ 
 			..code:: sh
 			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
