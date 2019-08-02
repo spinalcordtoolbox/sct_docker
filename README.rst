@@ -29,17 +29,6 @@ directly pretty much anywhere else.
 
 Note: in case of problem, see `Support`_.
 
-Docker runs natively only on Windows 10 Pro/Enterprise.
-Download the docker installer from the `Docker official site
-<https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_
-
-To Install Docker in Windows XP/VISTA/7/8/8.1/10 others than
-Pro/Enterprise use `Docker Toolbox
-<https://docs.docker.com/toolbox/overview/>`_.
-
-Here is the the `tutorial
-<https://docs.docker.com/toolbox/toolbox_install_windows/>`_.
-
 When using Docker Toolbox, mounting folders in a docker container can
 be a bit complicated and has certain limitations.
 The main limitation is that by default we will only be able to mount
@@ -65,7 +54,15 @@ Installation
 
 #. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
 
-#. Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ (or `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_ depending of your Windows version).
+#. Install Docker:
+
+   If you are on Windows 10 Pro/Enterprise: Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ 
+   
+   If you are on Windows XP/VISTA/7/8/8.1/10 others than
+Pro/Enterprise: Install `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_.
+
+   See this `tutorial
+<https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker.
 
 #. Fetch the SCT image
 
