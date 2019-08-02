@@ -196,10 +196,10 @@ Usage
 		Open VirtualBox GUI 
 		
 		add a shared folder in the default machine setting :
-			![image1](/picture/screenshot1.png?raw=true )
+			.. image:: ./picture/screenshot1.png
 			click setting > shared folder and
 			 on the folder with a '+' sign
-			![image2](/picture/screenshot2.png?raw=true )
+			.. image:: ./picture/screenshot2.png
  
 			Write C:\Users\docker_shared_folder 
 			Write docker_shared_folder in Name textbox
@@ -234,9 +234,9 @@ Usage
 		
 		then launch the container by running :
  
-			.. code:: sh
+		.. code:: sh
 
-			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+		run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
 
 
