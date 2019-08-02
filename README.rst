@@ -154,6 +154,69 @@ Usage
    the changes made to it will be visible for both the Docker
    container and the Windows system.
 
+#  Check the shared folder :
+    - run command
+    ..code:: sh
+	ls
+    - the docker_shared_folder should be highlighted in green : 
+	
+      if not : 
+	- check the permission on your local host file :
+	    go to C:/Users/
+	    right click on the folder open properties of the folder.
+	    go to the security tab 
+	    Check that the USER have full control over the folder.
+
+		if yes move on to the point.
+
+		if not change the permission and run the ls command again. 
+		if the folder is highlighted in green try creating a folder
+		inside it.
+
+		..code:: sh
+			mkdir test
+		Check if a new folder appeared in C:/Users/docker_folder_shared
+	
+		
+	- Go to the docker quickstart terminal
+		Stop Docker Machine if it's running, by running command:
+		..code:: sh 
+			docker-machine stop
+
+		Open VirtualBox GUI 
+		
+		add a shared folder in the default machine setting :
+			click on default > setting > shared folder and
+			 on the folder with a + sign 
+			Write C:\Users\docker_shared_folder 
+			Write docker_shared_folder in Name textbox
+
+			check permanent configuration and mount automatically. 
+		Go back to docker quickstart terminal. 
+		Restart Docker Machine, by running command :
+		..code:: sh 
+			 docker-machine start
+		SSH into the Docker Machine, by running command 
+		..code:: sh
+			docker-machine ssh
+		creat a new directory there by running :
+		..code:: sh 
+			mkdir docker_shared_folder
+
+		This will be /home/docker/docker_shared_folder.
+		Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
+		..code::sh
+ 		sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
+		
+		To launch the container run : 
+			..code:: sh
+			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+		
+
+
+
+	
+
 #. (NOT MANDATORY) Change the password (default is `sct`) from the
    container prompt:
 
