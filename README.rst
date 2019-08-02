@@ -171,7 +171,7 @@ Usage
 		
 	    Check that the USER have full control over the folder.
 
-	    ![permission1](/picture/permission1.png?raw=true )
+	    .. image:: /picture/permission1.png
 
 	    if yes move on to the point.
 
@@ -179,9 +179,9 @@ Usage
 	    if the folder is highlighted in green try creating a folder
 	    inside it.
 
-		.. code:: sh
+	    .. code:: sh
 
-			mkdir test
+		mkdir test
 
 	- Check if a new folder appeared in C:/Users/docker_folder_shared
 	
@@ -196,10 +196,10 @@ Usage
 		Open VirtualBox GUI 
 		
 		add a shared folder in the default machine setting :
-			.. image:: ./picture/screenshot1.png
+			.. image:: ./picture/screenshot1.PNG
 			click setting > shared folder and
 			 on the folder with a '+' sign
-			.. image:: ./picture/screenshot2.png
+			.. image:: ./picture/screenshot2.PNG
  
 			Write C:\Users\docker_shared_folder 
 			Write docker_shared_folder in Name textbox
@@ -211,7 +211,7 @@ Usage
 
 		.. code:: sh 
 
-			 docker-machine start
+			docker-machine start
 
 		SSH into the Docker Machine, by running command 
 
@@ -228,15 +228,15 @@ Usage
 		This will be /home/docker/docker_shared_folder.
 		Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
 
-		.. code::sh
+		.. code:: sh
 
- 		sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
+ 			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
 		then launch the container by running :
  
 		.. code:: sh
 
-		run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
 
 
