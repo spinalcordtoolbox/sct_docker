@@ -189,7 +189,7 @@ Usage
 	
 		
 	- Go to the docker quickstart terminal
-	     Stop Docker Machine if it's running, by running command:
+		Stop Docker Machine if it's running, by running command:
 
 		.. code:: sh 
 
@@ -197,17 +197,20 @@ Usage
 
 		Open VirtualBox GUI 
 		
-	      add a shared folder in the default machine setting :
+		add a shared folder in the default machine setting :
 		.. image:: ./picture/screenshot1.PNG
 		click setting > shared folder and on the folder with a '+' sign
 		.. image:: ./picture/screenshot2.PNG
  
 		Write C:\Users\docker_shared_folder 
+
 		Write docker_shared_folder in Name textbox
+
 		Check Make Permanent and mount automatically boxes.
-		s.. image:: /picture/screenshot3.PNG 
+		.. image:: /picture/screenshot3.PNG 
  
-		Go back to docker quickstart terminal. 
+		Go back to docker quickstart terminal.
+ 
 		Restart Docker Machine, by running command :
 
 		.. code:: sh 
