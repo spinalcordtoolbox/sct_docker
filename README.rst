@@ -162,6 +162,7 @@ Usage
 	ls
 
     - the docker_shared_folder should be highlighted in green : 
+	.. image:: /picture/screenshot_green.PNG
 	
       if not : 
 	- check the permission on your local host file :
@@ -203,8 +204,8 @@ Usage
  
 			Write C:\Users\docker_shared_folder 
 			Write docker_shared_folder in Name textbox
-			check permanent configuration and mount automatically boxes.
-			![image3](/picture/screenshot3.png?raw=true )
+			check Make Permanent and mount automatically boxes.
+			.. image:: /picture/screenshot3.PNG 
  
 		Go back to docker quickstart terminal. 
 		Restart Docker Machine, by running command :
