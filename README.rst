@@ -222,7 +222,7 @@ Usage
 
 			docker-machine ssh
 
-		- creat a new directory there by running :
+		- create a new directory there by running :
 
 		.. code:: sh 
 
