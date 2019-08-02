@@ -234,6 +234,8 @@ Usage
 
  			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
+		sudo password is sct unless you've changed it before.s
+		
 		then launch the container by running :
  
 		.. code:: sh
