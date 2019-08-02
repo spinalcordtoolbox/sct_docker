@@ -156,7 +156,9 @@ Usage
 
 #.  Check the shared folder :
     - run command
+
     .. code:: sh
+
 	ls
 
     - the docker_shared_folder should be highlighted in green : 
@@ -168,6 +170,7 @@ Usage
 	    go to the security tab 
 		
 	    Check that the USER have full control over the folder.
+
 		![permission1](/picture/permission1.png?raw=true )
 
 		if yes move on to the point.
@@ -177,6 +180,7 @@ Usage
 		inside it.
 
 		.. code:: sh
+
 			mkdir test
 
 		- Check if a new folder appeared in C:/Users/docker_folder_shared
@@ -184,7 +188,9 @@ Usage
 		
 	- Go to the docker quickstart terminal
 		Stop Docker Machine if it's running, by running command:
+
 		.. code:: sh 
+
 			docker-machine stop
 
 		Open VirtualBox GUI 
@@ -204,27 +210,32 @@ Usage
 		Restart Docker Machine, by running command :
 
 		.. code:: sh 
+
 			 docker-machine start
 
 		SSH into the Docker Machine, by running command 
 
 		.. code:: sh
+
 			docker-machine ssh
 
 		creat a new directory there by running :
 
 		.. code:: sh 
+
 			mkdir docker_shared_folder
 
 		This will be /home/docker/docker_shared_folder.
 		Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
 
 		.. code::sh
+
  		sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
 		then launch the container by running :
  
 			.. code:: sh
+
 			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
 
