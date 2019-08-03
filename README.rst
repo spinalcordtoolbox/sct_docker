@@ -131,19 +131,17 @@ Usage
 
 #. Start throw-away container on the image.
 
-   - If you are using Docker Toolbox, open Docker Quickstart Terminal
-     wait until get a prompt and write:
-
-     .. code:: sh
-
-        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
-
-   - If running Docker Desktop, run a different command:
+   - If running Docker Desktop, open Docker Quickstart Terminal, wait until get a prompt and write:
 
      .. code:: sh
 
         docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
+   - If running Docker Toolbox, open Docker Quickstart Terminal, wait until get a prompt and write:
+
+     .. code:: sh
+
+        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
    Windows host system will be linked to the folder
