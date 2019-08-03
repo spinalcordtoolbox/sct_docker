@@ -57,10 +57,12 @@ Installation
 #. Install Docker:
 
    - If you are on Windows 10 Pro/Enterprise: Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ 
-   
+
+     See this `tutorial  <https://docs.docker.com/docker-for-windows/install/>`_ to install Docker.
+
    - If you are on Windows XP/VISTA/7/8/8.1/10 others than Pro/Enterprise: Install `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_.
 
-   See this `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker.
+     See this `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker Toolbox.
 
 #. Fetch the SCT image
 
@@ -129,19 +131,17 @@ Usage
 
 #. Start throw-away container on the image.
 
-   - If you are using Docker Toolbox, open Docker Quickstart Terminal
-     wait until get a prompt and write:
-
-     .. code:: sh
-
-        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
-
-   - If running Docker Desktop, run a different command:
+   - If running Docker Desktop, open Docker Quickstart Terminal, wait until get a prompt and write:
 
      .. code:: sh
 
         docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
+   - If running Docker Toolbox, open Docker Quickstart Terminal, wait until get a prompt and write:
+
+     .. code:: sh
+
+        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
    Windows host system will be linked to the folder
@@ -149,118 +149,127 @@ Usage
    the changes made to it will be visible for both the Docker
    container and the Windows system.
 
-#.  Check the shared folder :
+#. Check the shared folder:
 
-    - run command
+   - Run command
 
     .. code:: sh
 
-	ls
+       ls
 
-    - the docker_shared_folder should be highlighted in green : 
-	.. image:: /picture/screenshot_green.PNG
-	
-      if not : 
-	- check the permission on your local host file :
-	    - go to C:/Users/
-	    - right click on the folder open properties of the folder.
-	    - go to the security tab 
-		
-	    - Check that the USER have full control over the folder.
-
-	    .. image:: /picture/permission1.png
-
-	    - if yes move on to next paragraph.
-
-	    - if not change the permission and run the ls command again in the docker quickstart terminal. 
-	    - if the folder is highlighted in green try creating a folder inside it.
-
-	    .. code:: sh
-
-		mkdir test
-
-	    - Check if a new folder appeared in C:/Users/docker_folder_shared
-	
-		
-	- Go to the docker quickstart terminal
-
-		- Stop Docker Machine if it's running, by running command:
-
-		.. code:: sh 
-
-			docker-machine stop
-
-		- Open VirtualBox GUI 
-		
-		- add a shared folder in the default machine setting :
-
-			.. image:: ./picture/screenshot1.PNG
-
-			click setting > shared folder and on the folder with a '+' sign
-
-			.. image:: ./picture/screenshot2.PNG
+    The ``docker_shared_folder`` should be highlighted in green:
  
-			- Write C:\Users\docker_shared_folder in folder path
+    .. image:: picture/screenshot_green.PNG
+	
+    If not, check the permission on your local host file:
 
-			- Write docker_shared_folder in Name textbox
+    - Go to ``C:/Users/``
 
-			- Check Make Permanent and mount automatically boxes.
+    - Right click on the folder open properties of the folder.
 
-			.. image:: /picture/screenshot3.PNG 
+    - Go to the security tab 
+		
+    - Check that USER has full control over the folder:
+
+      .. image:: picture/permission1.png
+
+      If yes, you can move on to step 3.
+
+      If not, change the permission and run the ``ls`` command again in the docker quickstart terminal (see above). 
+
+      - If ``docker_shared_folder`` is highlighted in green, try creating a folder inside it:
+
+	.. code:: sh
+
+	   mkdir test
+
+      - Check if a new folder appeared in ``C:/Users/docker_folder_shared``. 
+      
+        If yes, you can move on to step 3.
+	
+	If not, try the following:
+ 		
+        - Go to the Docker quickstart terminal
+
+        - Stop Docker Machine:
+
+          .. code:: sh 
+
+             docker-machine stop
+
+        - Open VirtualBox GUI 
+		
+        - Add a shared folder in the default machine settings:
+
+          .. image:: picture/screenshot1.PNG
+
+	     click setting > shared folder and on the folder with a '+' sign
+
+          .. image:: picture/screenshot2.PNG
+ 
+          - Write ``C:\Users\docker_shared_folder`` in folder path
+
+          - Write ``docker_shared_folder`` in Name textbox
+
+          - Check Make Permanent and mount automatically boxes.
+
+            .. image:: picture/screenshot3.PNG 
  	
-			- Go back to docker quickstart terminal.
+        - Go back to docker quickstart terminal.
  
-		- Restart Docker Machine, by running command :
+        - Restart Docker Machine:
 
-		.. code:: sh 
+          .. code:: sh 
 
-			docker-machine start
+             docker-machine start
 
-		- SSH into the Docker Machine, by running command 
+        - SSH into the Docker Machine:
 
-		.. code:: sh
+          .. code:: sh
 
-			docker-machine ssh
+             docker-machine ssh
 
-		- create a new directory there by running :
+        - Create a new directory:
 
-		.. code:: sh 
+          .. code:: sh 
 
-			mkdir docker_shared_folder
+             mkdir docker_shared_folder
 
-		This will be /home/docker/docker_shared_folder.
+          This will be ``/home/docker/docker_shared_folder``
 
-		- Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
+        - Mount the created directory at the shared point you have just created:
 
-		.. code:: sh
+          .. code:: sh
 
- 			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
+             sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-		sudo password is sct unless you've changed it before
+          Note: sudo password is ``sct`` unless you have changed it before.
 		
-		- launch the container by running :
+        - Launch the container:
  
-		.. code:: sh
+          .. code:: sh
 
-			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
-		
+             run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 
-		- check if the docker shared folder is highlighted in green after running:
+        - Check if the Docker shared folder is highlighted in green:
 		
-		.. code:: sh 
-			ls
+          .. code:: sh 
+
+             ls
  
-		- if the folder is highlighted in green try creating a folder inside it.
+        - If the folder is highlighted in green, try creating a folder inside it:
+     
+          .. code:: sh
 
-	        .. code:: sh
+             mkdir test
 
-		      mkdir test
+        - Check if a new folder appeared in ``C:/Users/docker_folder_shared``
 
-	        - Check if a new folder appeared in C:/Users/docker_folder_shared
+          If yes, you can move on to step 3.
+    
+          If not, see `Support`_.
 
-	
-
-#. (NOT MANDATORY) Change the password (default is `sct`) from the
+#. (NOT MANDATORY) Change the password (default is ``sct``) from the
    container prompt:
 
    .. code:: sh
@@ -281,9 +290,8 @@ Usage
 
    If this is the first time you have done this procedure, the system
    will ask you if you want to add the remote PC (the docker
-   container) as trust pc, type "yes" without "". Then type the
-   password to enter the docker container (by default "sct" without
-   "").
+   container) as trust pc, type ``yes``. Then type the
+   password to enter the docker container (by default ``sct``).
 
    The graphic terminal emulator LXterminal should appear, which
    allows copying and pasting commands, which makes it easier for
