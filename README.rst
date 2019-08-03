@@ -29,6 +29,17 @@ directly pretty much anywhere else.
 
 Note: in case of problem, see `Support`_.
 
+Docker runs natively only on Windows 10 Pro/Enterprise.
+Download the docker installer from the `Docker official site
+<https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_
+
+To Install Docker in Windows XP/VISTA/7/8/8.1/10 others than
+Pro/Enterprise use `Docker Toolbox
+<https://docs.docker.com/toolbox/overview/>`_.
+
+Here is the the `tutorial
+<https://docs.docker.com/toolbox/toolbox_install_windows/>`_.
+
 When using Docker Toolbox, mounting folders in a docker container can
 be a bit complicated and has certain limitations.
 The main limitation is that by default we will only be able to mount
@@ -54,13 +65,7 @@ Installation
 
 #. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
 
-#. Install Docker:
-
-   - If you are on Windows 10 Pro/Enterprise: Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ 
-   
-   - If you are on Windows XP/VISTA/7/8/8.1/10 others than Pro/Enterprise: Install `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_.
-
-   See this `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker.
+#. Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ (or `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_ depending of your Windows version).
 
 #. Fetch the SCT image
 
@@ -148,117 +153,6 @@ Usage
    ``/home/sct/docker_shared_folder`` inside the Docker container and
    the changes made to it will be visible for both the Docker
    container and the Windows system.
-
-#.  Check the shared folder :
-
-    - run command
-
-    .. code:: sh
-
-	ls
-
-    - the docker_shared_folder should be highlighted in green : 
-	.. image:: /picture/screenshot_green.PNG
-	
-      if not : 
-	- check the permission on your local host file :
-	    - go to C:/Users/
-	    - right click on the folder open properties of the folder.
-	    - go to the security tab 
-		
-	    - Check that the USER have full control over the folder.
-
-	    .. image:: /picture/permission1.png
-
-	    - if yes move on to next paragraph.
-
-	    - if not change the permission and run the ls command again in the docker quickstart terminal. 
-	    - if the folder is highlighted in green try creating a folder inside it.
-
-	    .. code:: sh
-
-		mkdir test
-
-	    - Check if a new folder appeared in C:/Users/docker_folder_shared
-	
-		
-	- Go to the docker quickstart terminal
-
-		- Stop Docker Machine if it's running, by running command:
-
-		.. code:: sh 
-
-			docker-machine stop
-
-		- Open VirtualBox GUI 
-		
-		- add a shared folder in the default machine setting :
-
-			.. image:: ./picture/screenshot1.PNG
-
-			click setting > shared folder and on the folder with a '+' sign
-
-			.. image:: ./picture/screenshot2.PNG
- 
-			- Write C:\Users\docker_shared_folder in folder path
-
-			- Write docker_shared_folder in Name textbox
-
-			- Check Make Permanent and mount automatically boxes.
-
-			.. image:: /picture/screenshot3.PNG 
- 	
-			- Go back to docker quickstart terminal.
- 
-		- Restart Docker Machine, by running command :
-
-		.. code:: sh 
-
-			docker-machine start
-
-		- SSH into the Docker Machine, by running command 
-
-		.. code:: sh
-
-			docker-machine ssh
-
-		- create a new directory there by running :
-
-		.. code:: sh 
-
-			mkdir docker_shared_folder
-
-		This will be /home/docker/docker_shared_folder.
-
-		- Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
-
-		.. code:: sh
-
- 			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
-		
-		sudo password is sct unless you've changed it before
-		
-		- launch the container by running :
- 
-		.. code:: sh
-
-			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
-		
-
-		- check if the docker shared folder is highlighted in green after running:
-		
-		.. code:: sh 
-			ls
- 
-		- if the folder is highlighted in green try creating a folder inside it.
-
-	        .. code:: sh
-
-		      mkdir test
-
-	        - Check if a new folder appeared in C:/Users/docker_folder_shared
-
-	
 
 #. (NOT MANDATORY) Change the password (default is `sct`) from the
    container prompt:
@@ -453,8 +347,7 @@ Example: creation of offline archive tarball:
 Example: creation and distribution:
 
 .. code:: sh
-   
-   docker login  # Make sure your account has push permission on neuropoly organization
+
    ./sct_docker_images.py generate --version v3.2.4 --publish-under neuropoly/sct
 
 
