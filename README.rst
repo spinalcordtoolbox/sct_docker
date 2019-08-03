@@ -177,16 +177,16 @@ Usage
 
 	.. image:: picture/permission1.png
 
-	 - if yes move on to next paragraph.
+	- if yes move on to next paragraph.
 
-	 - if not change the permission and run the ls command again in the docker quickstart terminal. 
-	 - if the folder is highlighted in green try creating a folder inside it.
+	- if not change the permission and run the ls command again in the docker quickstart terminal. 
+	- if the folder is highlighted in green try creating a folder inside it.
 
 	   .. code:: sh
 
 		mkdir test
 
-	 - Check if a new folder appeared in C:/Users/docker_folder_shared. If yes you can move on to 3.
+	- Check if a new folder appeared in C:/Users/docker_folder_shared. If yes you can move on to 3.
 	
 		
    - Go to the docker quickstart terminal
@@ -225,9 +225,9 @@ Usage
 
    - SSH into the Docker Machine, by running command 
 
-	       .. code:: sh
+     	.. code:: sh
 
-			docker-machine ssh
+		docker-machine ssh
 
     - create a new directory there by running :
 
@@ -243,26 +243,26 @@ Usage
 
       	sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-   sudo password is sct unless you've changed it before
+     sudo password is sct unless you've changed it before
 		
    - launch the container by running :
  
-		.. code:: sh
+     .. code:: sh
 
-			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+      	run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
 
    - check if the docker shared folder is highlighted in green after running:
 		
-		.. code:: sh 
+     .. code:: sh 
 
-			ls
+      	ls
  
    - if the folder is highlighted in green try creating a folder inside it.
+     
+     .. code:: sh
 
-	        .. code:: sh
-
-		      mkdir test
+      	mkdir test
 
    - Check if a new folder appeared in C:/Users/docker_folder_shared
 
