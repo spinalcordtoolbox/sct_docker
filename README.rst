@@ -58,11 +58,11 @@ Installation
 
    - If you are on Windows 10 Pro/Enterprise: Install `Docker <https://store.docker.com/editions/community/docker-ce-desktop-windows/>`_ 
 
-   See this `tutorial  <https://docs.docker.com/docker-for-windows/install/>`_ to install Docker.
+     See this `tutorial  <https://docs.docker.com/docker-for-windows/install/>`_ to install Docker.
 
    - If you are on Windows XP/VISTA/7/8/8.1/10 others than Pro/Enterprise: Install `Docker Toolbox <https://docs.docker.com/toolbox/overview/>`_.
 
-   See this `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker Toolbox.
+     See this `tutorial <https://docs.docker.com/toolbox/toolbox_install_windows/>`_ to install Docker Toolbox.
 
 #. Fetch the SCT image
 
@@ -164,9 +164,9 @@ Usage
 	.. image:: picture/screenshot_green.PNG
 	
       if not : 
-      - check the permission on your local host file :
+      	- check the permission on your local host file :
 
-      - go to C:/Users/
+      	- go to C:/Users/
 
 	    - right click on the folder open properties of the folder.
 
@@ -196,7 +196,7 @@ Usage
 
 			docker-machine stop
 
-		- Open VirtualBox GUI 
+	- Open VirtualBox GUI 
 		
 		- add a shared folder in the default machine setting :
 
@@ -216,53 +216,53 @@ Usage
  	
 			- Go back to docker quickstart terminal.
  
-		- Restart Docker Machine, by running command :
+	- Restart Docker Machine, by running command :
 
-		.. code:: sh 
+	      .. code:: sh 
 
 			docker-machine start
 
-		- SSH into the Docker Machine, by running command 
+	- SSH into the Docker Machine, by running command 
 
-		.. code:: sh
+	       .. code:: sh
 
 			docker-machine ssh
 
-		- create a new directory there by running :
+	- create a new directory there by running :
 
 		.. code:: sh 
 
 			mkdir docker_shared_folder
 
-		This will be /home/docker/docker_shared_folder.
+	This will be /home/docker/docker_shared_folder.
 
-		- Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
+	- Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
 
 		.. code:: sh
 
  			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-		sudo password is sct unless you've changed it before
+	sudo password is sct unless you've changed it before
 		
-		- launch the container by running :
+	- launch the container by running :
  
 		.. code:: sh
 
 			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
 
-		- check if the docker shared folder is highlighted in green after running:
+	- check if the docker shared folder is highlighted in green after running:
 		
 		.. code:: sh 
 			ls
  
-		- if the folder is highlighted in green try creating a folder inside it.
+	- if the folder is highlighted in green try creating a folder inside it.
 
 	        .. code:: sh
 
 		      mkdir test
 
-	        - Check if a new folder appeared in C:/Users/docker_folder_shared
+	- Check if a new folder appeared in C:/Users/docker_folder_shared
 
 	
 
