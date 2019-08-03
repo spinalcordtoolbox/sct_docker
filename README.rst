@@ -155,7 +155,7 @@ Usage
 
    - run command
 
-       .. code:: sh
+     .. code:: sh
 
 	  ls
 
@@ -219,23 +219,23 @@ Usage
  
    - Restart Docker Machine, by running command :
 
-     	.. code:: sh 
+     .. code:: sh 
 
 		docker-machine start
 
    - SSH into the Docker Machine, by running command 
 
-     	.. code:: sh
+     .. code:: sh
 
 		docker-machine ssh
 
-    - create a new directory there by running :
+   - create a new directory there by running :
 
-     	.. code:: sh 
+      .. code:: sh 
 
      		mkdir docker_shared_folder
 
-   This will be /home/docker/docker_shared_folder.
+     This will be /home/docker/docker_shared_folder.
 
    - Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
 
