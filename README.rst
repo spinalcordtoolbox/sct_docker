@@ -231,9 +231,9 @@ Usage
 
    - create a new directory there by running :
 
-      .. code:: sh 
+     .. code:: sh 
 
-     		mkdir docker_shared_folder
+     	 mkdir docker_shared_folder
 
      This will be /home/docker/docker_shared_folder.
 
