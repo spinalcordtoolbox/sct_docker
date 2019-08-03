@@ -182,7 +182,7 @@ Usage
 	- if not change the permission and run the ls command again in the docker quickstart terminal. 
 	- if the folder is highlighted in green try creating a folder inside it.
 
-	   .. code:: sh
+	  .. code:: sh
 
 		mkdir test
 
