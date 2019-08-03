@@ -161,9 +161,9 @@ Usage
 
    - the docker_shared_folder should be highlighted in green :
  
-	.. image:: picture/screenshot_green.PNG
+   .. image:: picture/screenshot_green.PNG
 	
-      if not :
+   if not :
  
    - check the permission on your local host file :
 
@@ -175,16 +175,16 @@ Usage
 		
 	- Check that the USER have full control over the folder.
 
-	    	.. image:: picture/permission1.png
+	.. image:: picture/permission1.png
 
 	 - if yes move on to next paragraph.
 
 	 - if not change the permission and run the ls command again in the docker quickstart terminal. 
 	 - if the folder is highlighted in green try creating a folder inside it.
 
-	    	.. code:: sh
+	   .. code:: sh
 
-		     mkdir test
+		mkdir test
 
 	 - Check if a new folder appeared in C:/Users/docker_folder_shared. If yes you can move on to 3.
 	
@@ -193,19 +193,19 @@ Usage
 
    - Stop Docker Machine if it's running, by running command:
 
-     	.. code:: sh 
+     .. code:: sh 
 
-		docker-machine stop
+	docker-machine stop
 
    - Open VirtualBox GUI 
 		
 		- add a shared folder in the default machine setting :
 
-			.. image:: picture/screenshot1.PNG
+		.. image:: picture/screenshot1.PNG
 
-		   click setting > shared folder and on the folder with a '+' sign
+		click setting > shared folder and on the folder with a '+' sign
 
-			.. image:: picture/screenshot2.PNG
+		.. image:: picture/screenshot2.PNG
  
 		- Write C:\Users\docker_shared_folder in folder path
 
@@ -213,7 +213,7 @@ Usage
 
 		- Check Make Permanent and mount automatically boxes.
 
-			.. image:: picture/screenshot3.PNG 
+		.. image:: picture/screenshot3.PNG 
  	
 		- Go back to docker quickstart terminal.
  
@@ -239,11 +239,11 @@ Usage
 
    - Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
 
-     	.. code:: sh
+     .. code:: sh
 
-      		sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
+      	sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-      sudo password is sct unless you've changed it before
+   sudo password is sct unless you've changed it before
 		
    - launch the container by running :
  
