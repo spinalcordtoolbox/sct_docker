@@ -151,7 +151,7 @@ Usage
    the changes made to it will be visible for both the Docker
    container and the Windows system.
 
-#.  Check the shared folder:
+#. Check the shared folder:
 
    - run command
 
