@@ -163,40 +163,41 @@ Usage
  
 	.. image:: picture/screenshot_green.PNG
 	
-      if not : 
-      	- check the permission on your local host file :
+      if not :
+ 
+    - check the permission on your local host file :
 
       	- go to C:/Users/
 
-	    - right click on the folder open properties of the folder.
+	- right click on the folder open properties of the folder.
 
-	    - go to the security tab 
+	- go to the security tab 
 		
-	    - Check that the USER have full control over the folder.
+	- Check that the USER have full control over the folder.
 
 	    	.. image:: picture/permission1.png
 
-	    - if yes move on to next paragraph.
+	 - if yes move on to next paragraph.
 
-	    - if not change the permission and run the ls command again in the docker quickstart terminal. 
-	    - if the folder is highlighted in green try creating a folder inside it.
+	 - if not change the permission and run the ls command again in the docker quickstart terminal. 
+	 - if the folder is highlighted in green try creating a folder inside it.
 
 	    	.. code:: sh
 
 		     mkdir test
 
-	    - Check if a new folder appeared in C:/Users/docker_folder_shared
+	 - Check if a new folder appeared in C:/Users/docker_folder_shared. If yes you can move on to 3.
 	
 		
-	- Go to the docker quickstart terminal
+     - Go to the docker quickstart terminal
 
-	- Stop Docker Machine if it's running, by running command:
+     - Stop Docker Machine if it's running, by running command:
 
-		.. code:: sh 
+     	.. code:: sh 
 
-			docker-machine stop
+		docker-machine stop
 
-	- Open VirtualBox GUI 
+     - Open VirtualBox GUI 
 		
 		- add a shared folder in the default machine setting :
 
@@ -206,63 +207,64 @@ Usage
 
 			.. image:: picture/screenshot2.PNG
  
-			- Write C:\Users\docker_shared_folder in folder path
+		- Write C:\Users\docker_shared_folder in folder path
 
-			- Write docker_shared_folder in Name textbox
+		- Write docker_shared_folder in Name textbox
 
-			- Check Make Permanent and mount automatically boxes.
+		- Check Make Permanent and mount automatically boxes.
 
-			.. image:: /picture/screenshot3.PNG 
+			.. image:: picture/screenshot3.PNG 
  	
-			- Go back to docker quickstart terminal.
+		- Go back to docker quickstart terminal.
  
-	- Restart Docker Machine, by running command :
+     - Restart Docker Machine, by running command :
 
-	      .. code:: sh 
+     	.. code:: sh 
 
-			docker-machine start
+		docker-machine start
 
-	- SSH into the Docker Machine, by running command 
+     - SSH into the Docker Machine, by running command 
 
 	       .. code:: sh
 
 			docker-machine ssh
 
-	- create a new directory there by running :
+     - create a new directory there by running :
 
-		.. code:: sh 
+     	.. code:: sh 
 
-			mkdir docker_shared_folder
+     		mkdir docker_shared_folder
 
-	This will be /home/docker/docker_shared_folder.
+      This will be /home/docker/docker_shared_folder.
 
-	- Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
+     - Mount the Shared Folder you named above (docker_shared_folder) at the mount point you have created by running:
 
-		.. code:: sh
+     	.. code:: sh
 
- 			sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
+      		sudo mount -t vboxsf -o uid=1000,gid=50 docker_shared_folder /home/docker/docker_shared_folder
 		
-	sudo password is sct unless you've changed it before
+      sudo password is sct unless you've changed it before
 		
-	- launch the container by running :
+     - launch the container by running :
  
 		.. code:: sh
 
 			run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
 		
 
-	- check if the docker shared folder is highlighted in green after running:
+     - check if the docker shared folder is highlighted in green after running:
 		
 		.. code:: sh 
+
 			ls
  
-	- if the folder is highlighted in green try creating a folder inside it.
+     - if the folder is highlighted in green try creating a folder inside it.
 
 	        .. code:: sh
 
 		      mkdir test
 
-	- Check if a new folder appeared in C:/Users/docker_folder_shared
+     - Check if a new folder appeared in C:/Users/docker_folder_shared
 
 	
 
