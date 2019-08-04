@@ -562,13 +562,13 @@ if __name__ == "__main__":
 	)
 
 	subp.add_argument("--distro",
-	 default="ubuntu:16.04",
+	 default="ubuntu:18.04",
 	 help="Distribution to use (docker image)",
 	 required=True,
 	)
 
 	subp.add_argument("--version",
-	 default="3.1.1",
+	 default="4.0.0",
 	 required=True,
 	)
 
