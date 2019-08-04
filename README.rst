@@ -75,7 +75,7 @@ Installation
 
      .. code:: sh
 
-        docker pull neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+        docker pull neuropoly/sct:sct-4.0.0-official
 
      Note: to list all available images on the registery, please see `Generation and distribution`_.
 
@@ -86,7 +86,7 @@ Installation
 
      .. code:: sh
 
-        docker load --input sct-4.0.0-beta.0-ubuntu_18.04.tar
+        docker load --input sct-4.0.0-official.tar
 
      **Note:** After the --input parameter you can include the complete
      path where the docker image is located.
@@ -135,13 +135,13 @@ Usage
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-4.0.0-official
 
    - If running Docker Toolbox, open Docker Quickstart Terminal, wait until get a prompt and write:
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-4.0.0-official
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
    Windows host system will be linked to the folder
@@ -339,13 +339,13 @@ Installation
 
      .. code:: sh
 
-        docker pull neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+        docker pull neuropoly/sct:sct-4.0.0-official
 
    - Else, load the SCT image from a local file
 
      .. code:: sh
 
-        docker load --input sct-v4.0.0-beta.0-ubuntu-18.04.tar
+        docker load --input sct-4.0.0-official.tar
 
 #. If you are on OSX and you need X forwarding (e.g. to run FSLeyes from the ssh window), install `Xquartz <https://www.xquartz.org/>`_.
    After installing Xquartz and after rebooting, run this command to prevent `this issue <https://github.com/neuropoly/sct_docker/issues/29>`_:
@@ -370,7 +370,7 @@ Usage
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-4.0.0-official
 
 
 #. (NOT MANDATORY) Change the password (default is `sct`) from the container prompt:
@@ -401,13 +401,13 @@ Usage
    .. code:: sh
 
       cd $HOME
-      tar xf /path/to/sct-v4.0.0-beta.0-ubuntu-18.04-offline.tar.xz
+      tar xf /path/to/sct-4.0.0-official-offline.tar.xz
 
 #. Add PATH:
 
    .. code:: sh
 
-      PATH+=":/home/sct/sct_4.0.0-beta.0/bin"
+      PATH+=":/home/sct/sct_4.0.0/bin"
 
 #. Use it!
 
@@ -450,20 +450,20 @@ Example: creation of all distros container images:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --version v3.2.4
+   ./sct_docker_images.py generate --version 4.0.0
 
 Example: creation of offline archive tarball:
 
 .. code:: sh
 
-   ./sct_docker_images.py generate --version v3.2.4 --distros ubuntu:18.04 --generate-distro-specific-sct-tarball
+   ./sct_docker_images.py generate --version 4.0.0 --distros ubuntu:18.04 --generate-distro-specific-sct-tarball
 
 Example: creation and distribution:
 
 .. code:: sh
    
    docker login  # Make sure your account has push permission on neuropoly organization
-   ./sct_docker_images.py generate --version v3.2.4 --publish-under neuropoly/sct
+   ./sct_docker_images.py generate --version 4.0.0 --publish-under neuropoly/sct
 
 
 Notes
