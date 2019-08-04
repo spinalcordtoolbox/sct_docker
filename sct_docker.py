@@ -413,6 +413,7 @@ ENV SCT_DIR {sct_dir}
 # Get data for offline use
 RUN bash -i -c "sct_download_data -d sct_example_data"
 RUN bash -i -c "sct_download_data -d sct_testing_data"
+RUN bash -i -c "sct_download_data -d sct_course-beijing19"
 	""".strip()
 
 	if install_fsleyes:
