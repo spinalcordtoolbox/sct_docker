@@ -126,6 +126,9 @@ Installation
 #. Finally, reboot your computer after the installation.
    (Or you might end up with issues afterwards such as ``ssh: connect to host localhost port 2222: Cannot assign requested adress`` )
 
+**Video tutorials on SCT installation:**
+  `Windows 10 home <https://v.youku.com/v_show/id_XNDMwMzQ1OTQ1Ng==.html?spm=a2hzp.8244740.0.0>`_ 
+  
 Usage
 *****
 
