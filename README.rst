@@ -10,7 +10,8 @@ This documentation shows how to install the latest version of SCT. If you want i
 ..
     1  Docker for Windows
       1.1  Installation
-      1.2  Usage
+      1.2  Video tutorials
+      1.3  Usage
     2  Docker for Unix like OSes (GNU/Linux, BSD family, MacOS)
       2.1  Installation
       2.2  Usage
@@ -126,8 +127,9 @@ Installation
 #. Finally, reboot your computer after the installation.
    (Or you might end up with issues afterwards such as ``ssh: connect to host localhost port 2222: Cannot assign requested adress`` )
 
-**Video tutorials on SCT installation:**
-  `Windows 10 home <https://v.youku.com/v_show/id_XNDMwMzQ1OTQ1Ng==.html?spm=a2hzp.8244740.0.0>`_ 
+Video tutorials
+***************
+`Windows 10 home <https://v.youku.com/v_show/id_XNDMwMzQ1OTQ1Ng==.html?spm=a2hzp.8244740.0.0>`_
   
 Usage
 *****
