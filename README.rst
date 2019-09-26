@@ -305,15 +305,15 @@ Usage
    LXterminal and FSLeyes should open, depending on how fast your
    computer is FSLeyes may take a few seconds to open.
    
-   If fsleyes is not working in the LXterminal : 
-   - Check if it working by running ``fsleyes &`` in the docker quickstart terminal
-	- if it works, run all the command in the docker terminal.
+   	If fsleyes is not working in the LXterminal : 
+   	- Check if it working by running ``fsleyes &`` in the docker quickstart terminal
+		- if it works, run all the command in the docker terminal.
  
-	- If it throws the error `` Unable to access the X Display, is $DISPLAY set properly?`` follow these next step:
-		- Run 'echo $DISPLAY' on the emulated Xming terminal
-		- Copy the output address
-		- Run export DISPLAY=<previously obtained adress> on the docker quickstart terminal
-		- Run fsleyes & (on the docker quickstart terminal) to check if it is working
+		- If it throws the error `` Unable to access the X Display, is $DISPLAY set properly?`` follow these next step:
+			- Run 'echo $DISPLAY' on the emulated Xming terminal
+			- Copy the output address
+			- Run export DISPLAY=<previously obtained adress> on the docker quickstart terminal
+			- Run fsleyes & (on the docker quickstart terminal) to check if it is working
 
    Notes:
 
