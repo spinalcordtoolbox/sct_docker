@@ -254,7 +254,7 @@ Usage
  
           .. code:: sh
 
-             run docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-v4.0.0-beta.0-ubuntu-18.04
+             docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-4.0.0-official
 
         - Check if the Docker shared folder is highlighted in green:
 		
@@ -304,6 +304,19 @@ Usage
    To check that X forwarding is working well write ``fsleyes &`` in
    LXterminal and FSLeyes should open, depending on how fast your
    computer is FSLeyes may take a few seconds to open.
+   
+   If fsleyes is not working in the LXterminal:
+ 
+   	 - Check if it's working on the docker machine by running ``fsleyes &`` in the docker quickstart terminal
+
+		- If it works, run all the commands in the docker terminal.
+ 
+		- If it throws the error ``Unable to access the X Display, is $DISPLAY set properly?`` follow these next steps:
+
+			- Run ``echo $DISPLAY`` in the LXterminal
+			- Copy the output address
+			- Run ``export DISPLAY=<previously obtained address>`` in the docker quickstart terminal
+			- Run ``fsleyes &`` (in the docker quickstart terminal) to check if it is working. A new Xming window with fsleyes should appear.
 
    Notes:
 
