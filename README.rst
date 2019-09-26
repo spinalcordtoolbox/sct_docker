@@ -305,7 +305,8 @@ Usage
    LXterminal and FSLeyes should open, depending on how fast your
    computer is FSLeyes may take a few seconds to open.
    
-   If fsleyes is not working in the LXterminal : 
+   If fsleyes is not working in the LXterminal:
+ 
    	 - Check if it working on the docker machine by running ``fsleyes &`` in the docker quickstart terminal
 
 		- If it works, run all the commands in the docker terminal.
