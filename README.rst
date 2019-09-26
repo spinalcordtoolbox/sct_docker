@@ -313,10 +313,10 @@ Usage
  
 		- If it throws the error ``Unable to access the X Display, is $DISPLAY set properly?`` follow these next steps:
 
-			- Run ``echo $DISPLAY`` in th LXterminal
+			- Run ``echo $DISPLAY`` in the LXterminal
 			- Copy the output address
-			- Run ``export DISPLAY=<previously obtained address>`` on the docker quickstart terminal
-			- Run ``fsleyes &`` (on the docker quickstart terminal) to check if it is working. An new Xming window with fsleyes should appear.
+			- Run ``export DISPLAY=<previously obtained address>`` in the docker quickstart terminal
+			- Run ``fsleyes &`` (in the docker quickstart terminal) to check if it is working. A new Xming window with fsleyes should appear.
 
    Notes:
 
