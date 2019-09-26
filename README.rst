@@ -307,7 +307,7 @@ Usage
    
    If fsleyes is not working in the LXterminal:
  
-   	 - Check if it working on the docker machine by running ``fsleyes &`` in the docker quickstart terminal
+   	 - Check if it's working on the docker machine by running ``fsleyes &`` in the docker quickstart terminal
 
 		- If it works, run all the commands in the docker terminal.
  
