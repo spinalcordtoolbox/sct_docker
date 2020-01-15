@@ -363,7 +363,7 @@ Installation
 
      .. code:: sh
 
-        docker load --input latest
+        docker load --input latest-offline.tar
 
 #. If you are on OSX and you need X forwarding (e.g. to run FSLeyes from the ssh window), install `Xquartz <https://www.xquartz.org/>`_.
    After installing Xquartz and after rebooting, run this command to prevent `this issue <https://github.com/neuropoly/sct_docker/issues/29>`_:
