@@ -419,7 +419,7 @@ Usage
    .. code:: sh
 
       cd $HOME
-      tar xf /path/to/latest-official-offline.tar.xz
+      tar xf /path/to/latest.tar.xz
 
 #. Add PATH:
 
