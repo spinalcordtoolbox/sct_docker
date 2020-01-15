@@ -76,7 +76,7 @@ Installation
 
      .. code:: sh
 
-        docker pull neuropoly/sct:sct-latest
+        docker pull neuropoly/sct:latest
 
      Note: to list all available images on the registery, please see `Generation and distribution`_.
 
@@ -87,7 +87,7 @@ Installation
 
      .. code:: sh
 
-        docker load --input sct-latest.tar
+        docker load --input latest.tar
 
      **Note:** After the --input parameter you can include the complete
      path where the docker image is located.
@@ -140,13 +140,13 @@ Usage
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-latest
+        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
 
    - If running Docker Toolbox, open Docker Quickstart Terminal, wait until get a prompt and write:
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-latest
+        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
    Windows host system will be linked to the folder
@@ -254,7 +254,7 @@ Usage
  
           .. code:: sh
 
-             docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-latest
+             docker run -p 2222:22 --rm -it -v /home/docker/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
 
         - Check if the Docker shared folder is highlighted in green:
 		
@@ -357,13 +357,13 @@ Installation
 
      .. code:: sh
 
-        docker pull neuropoly/sct:sct-latest
+        docker pull neuropoly/sct:latest
 
    - Else, load the SCT image from a local file
 
      .. code:: sh
 
-        docker load --input sct-latest
+        docker load --input latest
 
 #. If you are on OSX and you need X forwarding (e.g. to run FSLeyes from the ssh window), install `Xquartz <https://www.xquartz.org/>`_.
    After installing Xquartz and after rebooting, run this command to prevent `this issue <https://github.com/neuropoly/sct_docker/issues/29>`_:
@@ -388,7 +388,7 @@ Usage
 
    .. code:: sh
 
-      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:sct-latest
+      docker run -p 2222:22 --rm -it -v ~/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
 
 
 #. (NOT MANDATORY) Change the password (default is `sct`) from the container prompt:
@@ -419,13 +419,13 @@ Usage
    .. code:: sh
 
       cd $HOME
-      tar xf /path/to/sct-latest-official-offline.tar.xz
+      tar xf /path/to/latest-official-offline.tar.xz
 
 #. Add PATH:
 
    .. code:: sh
 
-      PATH+=":/home/sct/sct_latest/bin"
+      PATH+=":/home/sct/latest/bin"
 
 #. Use it!
 
