@@ -298,7 +298,18 @@ Usage
    container) as trust pc, type ``yes``. Then type the
    password to enter the docker container (by default ``sct``).
 
-   The graphic terminal emulator LXterminal should appear, which
+   If there is no new open windows :
+	- Double click on the 'windows/Erase_fingerprint_docker' program
+	- Try again 
+	- if it is still not working : 
+		- Open the file manager and go to C:/Users/Your_username
+		- In the searchbar type '.ssh'
+		- Open the found '.ssh' folder.
+		- Open the 'known_hosts' file with a text editor
+		- Remove line starting with `192.168.99.100` or `localhost`
+		- try again 
+
+   The graphic terminal emulator LXterminal should appear (if not check the task bar at the bottom of the screen), which
    allows copying and pasting commands, which makes it easier for
    users to use it.
    To check that X forwarding is working well write ``fsleyes &`` in
