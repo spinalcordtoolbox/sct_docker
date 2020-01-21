@@ -493,7 +493,7 @@ RUN bash -c "curl https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-5.0.11-sources.tar
 			""".strip()
 
 		frag += "\n" + """
-ENV FSLDIR /home/sct/fsl
+ENV FSLDIR /home/sct/.local/lib/python3.6/site-packages/fsleyes
 RUN bash -c ". ${FSLDIR}/etc/fslconf/fsl.sh; ls ${FSLDIR}/config/\${FSLMACHTYPE}"
 RUN bash -c ". ${FSLDIR}/etc/fslconf/fsl.sh; cd ${FSLDIR}; ./build"
 RUN bash -c ". ${FSLDIR}/etc/fslconf/fsl.sh; ${FSLDIR}/etc/fslconf/post_install.sh -f ${FSLDIR}"
