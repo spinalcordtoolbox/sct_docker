@@ -172,7 +172,6 @@ RUN dnf install -y sudo
 # For conda
 RUN dnf install -y bzip2
 
-
 # For remote GUI access
 RUN dnf install -y xorg-x11-twm xorg-x11-xauth xterm lxterminal
 RUN dnf install -y openssh-server
@@ -340,7 +339,6 @@ RUN sudo apt-get install -y gfortran
 
 # for pillow
 RUN sudo apt-get install -y libjpeg-dev
-
 
 
 ENV PYTHON python3
