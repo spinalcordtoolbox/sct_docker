@@ -69,6 +69,9 @@ FROM {distro}
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update
 RUN apt-get install -y curl
+
+# For Vim
+RUN sudo apt-get install -y vim --fix-missing
 	""".strip()
 
 	elif distro in ("centos:6", "centos:7",):
@@ -168,6 +171,7 @@ RUN dnf install -y sudo
 
 # For conda
 RUN dnf install -y bzip2
+
 
 # For remote GUI access
 RUN dnf install -y xorg-x11-twm xorg-x11-xauth xterm lxterminal
@@ -336,6 +340,7 @@ RUN sudo apt-get install -y gfortran
 
 # for pillow
 RUN sudo apt-get install -y libjpeg-dev
+
 
 
 ENV PYTHON python3

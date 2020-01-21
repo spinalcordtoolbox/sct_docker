@@ -105,13 +105,13 @@ Installation
 
       docker-machine stop default
 
-      /c/Program\ Files/Oracle/VirtualBox/VBoxManage.exe modifyvm default --memory 2048
+      /c/Program\ Files/Oracle/VirtualBox/VBoxManage.exe modifyvm default --memory 3072
 
       docker-machine start default
 
    **Note:** With these commands we have increased the RAM memory of
-   the VM Docker to 2GB.
-   It is important that your PC have at least 3 GB of RAM in order to
+   the VM Docker to 3GB.
+   It is important that your PC have at least 4 GB of RAM in order to
    leave at least 1 GB for your Windows host system.
 
 
