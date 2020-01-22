@@ -71,6 +71,7 @@ RUN apt-get update
 RUN apt-get install -y curl
 
 # For Vim
+RUN apt-get update
 RUN sudo apt-get install -y vim --fix-missing
 	""".strip()
 
