@@ -485,6 +485,7 @@ RUN ${PIP} install --user fsleyes
 		# https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation/ShellSetup
 		if False: #os.path.exists("fsl-5.0.11-sources.tar.gz"):
 			frag += "\n" + """
+ENV FSLDIR /home/sct/.local/lib/python3.6/site-packages/fsleyes
 COPY fsl-5.0.11-sources.tar.gz /home/sct/fsl-5.0.11-sources.tar.gz
 RUN bash -c "tar xzf fsl-5.0.11-sources.tar.gz && rm fsl-5.0.11-sources.tar.gz"
 			""".strip()#.format(os.getcwd())
@@ -494,7 +495,7 @@ RUN bash -c "curl https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-5.0.11-sources.tar
 			""".strip()
 
 		frag += "\n" + """
-ENV FSLDIR /home/sct/.local/lib/python3.6/site-packages/fsleyes
+ENV FSLDIR /home/sct/fsl
 RUN bash -c ". ${FSLDIR}/etc/fslconf/fsl.sh; ls ${FSLDIR}/config/\${FSLMACHTYPE}"
 RUN bash -c ". ${FSLDIR}/etc/fslconf/fsl.sh; cd ${FSLDIR}; ./build"
 RUN bash -c ". ${FSLDIR}/etc/fslconf/fsl.sh; ${FSLDIR}/etc/fslconf/post_install.sh -f ${FSLDIR}"
