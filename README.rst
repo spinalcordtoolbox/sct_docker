@@ -111,7 +111,7 @@ Installation
 
    **Note:** With these commands we have increased the RAM memory of
    the VM Docker to 3GB.
-   It is important that your PC have at least 4 GB of RAM in order to
+   It is important that your PC has at least 4 GB of RAM in order to
    leave at least 1 GB for your Windows host system.
 
 

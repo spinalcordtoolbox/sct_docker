@@ -68,11 +68,10 @@ FROM {distro}
 		frag += "\n" + """
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update
-RUN apt-get install -y curl
+RUN apt-get install -y curl vim --fix-missing
 
-# For Vim
-RUN apt-get update
-RUN sudo apt-get install -y vim --fix-missing
+# For Qc message
+ENV DOCKER=yes
 	""".strip()
 
 	elif distro in ("centos:6", "centos:7",):
@@ -172,6 +171,7 @@ RUN dnf install -y sudo
 
 # For conda
 RUN dnf install -y bzip2
+
 
 # For remote GUI access
 RUN dnf install -y xorg-x11-twm xorg-x11-xauth xterm lxterminal
@@ -417,7 +417,6 @@ ENV SCT_DIR {sct_dir}
 # Get data for offline use
 RUN bash -i -c "sct_download_data -d sct_example_data"
 RUN bash -i -c "sct_download_data -d sct_testing_data"
-RUN bash -i -c "sct_download_data -d sct_course-beijing19"
 	""".strip()
 
 	if install_fsleyes:
