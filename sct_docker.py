@@ -76,8 +76,8 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
     if distro.startswith(("debian", "ubuntu")):
         frag += "\n" + """"
         RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-        RUN apt-get update
-        RUN apt-get install -y curl vim --fix-missing
+        RUN apt-get update --fix-missing
+        RUN apt-get install -y curl vim 
 
         # For Qc message
         ENV DOCKER=yes
