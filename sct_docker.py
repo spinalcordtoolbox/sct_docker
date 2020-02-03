@@ -7,14 +7,10 @@ logger = logging.getLogger(__name__)
 
 if sys.hexversion < 0x03030000:
     import pipes
-
-
     def list2cmdline(lst):
         return " ".join(pipes.quote(x) for x in lst)
 else:
     import shlex
-
-
     def list2cmdline(lst):
         return " ".join(shlex.quote(x) for x in lst)
 
