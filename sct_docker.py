@@ -74,7 +74,7 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
         distro = "%s@%s" % (distro, orga)
 
     if distro.startswith(("debian", "ubuntu")):
-        frag += "\n" + """"
+        frag += "\n" + """
         RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
         RUN apt-get update --fix-missing
         RUN apt-get install -y curl vim 
@@ -188,7 +188,7 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
     if install_fsleyes or install_fsl or install_compilers:
         if distro.startswith(("debian", "ubuntu")):
             frag += "\n" + """
-            RUN apt-get update
+            RUN apt-get update --fix-missing
             RUN apt-get install -y build-essential
             """.strip()
 
