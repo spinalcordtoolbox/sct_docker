@@ -7,10 +7,14 @@ logger = logging.getLogger(__name__)
 
 if sys.hexversion < 0x03030000:
     import pipes
+
+
     def list2cmdline(lst):
         return " ".join(pipes.quote(x) for x in lst)
 else:
     import shlex
+
+
     def list2cmdline(lst):
         return " ".join(shlex.quote(x) for x in lst)
 
@@ -63,7 +67,7 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
     FROM {distro}
     """.strip().format(**locals())
 
-    docker =''
+    docker = ''
 
     if "/" in distro:
         orga, distro = distro.split("/")
@@ -468,7 +472,6 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
         # :| wxPython/ext/wxWidgets/src/gtk/settings.cpp:260:29: error: 'GTK_TYPE_HEADER_BAR' was not declared in this scope
         RUN ${PIP} install --user --upgrade cython
         """.strip()
-
 
         frag += "\n" + """
         # Workaround https://github.com/mcfletch/pyopengl/issues/11
