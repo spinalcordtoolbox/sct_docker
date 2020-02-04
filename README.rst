@@ -105,19 +105,19 @@ Installation
 
       docker-machine stop default
 
-      /c/Program\ Files/Oracle/VirtualBox/VBoxManage.exe modifyvm default --memory 2048
+      /c/Program\ Files/Oracle/VirtualBox/VBoxManage.exe modifyvm default --memory 3072
 
       docker-machine start default
 
    **Note:** With these commands we have increased the RAM memory of
-   the VM Docker to 2GB.
-   It is important that your PC have at least 3 GB of RAM in order to
+   the VM Docker to 3GB.
+   It is important that your PC has at least 4 GB of RAM in order to
    leave at least 1 GB for your Windows host system.
 
 
 #. For sharing folders between host and container:
 
-   #. Go to `C:/Users` and create the folder named
+   #. Go to `C:/Users/Public` and create the folder named
       ``docker_shared_folder``
 
    #. If running Docker for Windows, click the Docker tray icon,
@@ -140,13 +140,13 @@ Usage
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v c:/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
+        docker run -p 2222:22 --rm -it -v c:/Users/Public/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
 
    - If running Docker Toolbox, open Docker Quickstart Terminal, wait until get a prompt and write:
 
      .. code:: sh
 
-        docker run -p 2222:22 --rm -it -v //c/Users/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
+        docker run -p 2222:22 --rm -it -v //c/Users/Public/docker_shared_folder://home/sct/docker_shared_folder neuropoly/sct:latest
 
    **Note:** The folder ``C:/Users/docker_shared_folder`` on the
    Windows host system will be linked to the folder
@@ -168,7 +168,7 @@ Usage
 	
     If not, check the permission on your local host file:
 
-    - Go to ``C:/Users/``
+    - Go to ``C:/Users/Public``
 
     - Right click on the folder open properties of the folder.
 
@@ -212,7 +212,7 @@ Usage
 
           .. image:: picture/screenshot2.PNG
  
-          - Write ``C:\Users\docker_shared_folder`` in folder path
+          - Write ``C:\Users\Public\docker_shared_folder`` in folder path
 
           - Write ``docker_shared_folder`` in Name textbox
 
@@ -268,7 +268,7 @@ Usage
 
              mkdir test
 
-        - Check if a new folder appeared in ``C:/Users/docker_folder_shared``
+        - Check if a new folder appeared in ``C:/Users/Public/docker_folder_shared``
 
           If yes, you can move on to step 3.
     
