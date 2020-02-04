@@ -67,6 +67,7 @@ def generate(distro="debian:7", version="3.1.1", commands=None, name=None,
     FROM {distro}
     """.strip().format(**locals())
 
+    # This docker variable will be needed to strip the unwanted spaces at the end. We just initialize it here. 
     docker = ''
 
     if "/" in distro:
