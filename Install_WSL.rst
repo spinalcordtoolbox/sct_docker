@@ -45,23 +45,18 @@ Run the following command to install various packages that will be needed to ins
 Install SCT
 *********** 
 
-run the following command to download SCT:
+Download SCT:
 
-.. code:: sh
+.. code-block:: sh
 
-    wget https://github.com/neuropoly/spinalcordtoolbox/archive/4.2.1.zip
+  git clone https://github.com/neuropoly/spinalcordtoolbox.git sct
+  cd sct
 
-Once the download is complete run this command to extract SCT from the zip archive:
+To select a [specific release](https://github.com/neuropoly/spinalcordtoolbox/releases), replace X.Y.Z below with the proper release number. If you prefer to use the development version, you can skip this step.
 
-.. code:: sh
+.. code-block:: sh
 
-    unzip 4.2.1.zip
-
-Then go inside the folder by running:
-
-.. code:: sh 
-
-    cd spinalcordtoolbox-4.2.1
+  git checkout X.Y.Z
 
 To install SCT run:
 
