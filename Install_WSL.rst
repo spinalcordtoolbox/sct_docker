@@ -75,7 +75,7 @@ To complete the installation you need to run:
 Install FSL
 ***********
 
-FSL contains fsleyes which is the default viewer for mifti image in SCT. 
+FSL contains fsleyes which is the default viewer for NIfTI image in SCT. 
 Download and execute the installer:
  
 .. code-block:: sh
