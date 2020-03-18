@@ -76,7 +76,7 @@ Install FSL
 ***********
 
 FSL contains fsleyes which is the default viewer for mifti image in SCT. 
-Run this to download the installer and execute it:
+Download and execute the installer:
  
 .. code-block:: sh
 
