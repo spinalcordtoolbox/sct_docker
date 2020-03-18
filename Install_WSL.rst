@@ -4,7 +4,7 @@
 Spinal Cord Toolbox for Windows : Windows subsystem for linux
 ############################################################
 
-This documentation shows how to install the latest version of SCT. If you want install a different version of SCT please specify the version number you want.
+This documentation shows how to install the latest version of SCT. If you want to install a different version of SCT please specify the version number.
 
 .. contents::
 ..
