@@ -20,7 +20,7 @@ Installation
 
 #. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
 
-#. Install `Windows subsystem for linux <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_ and initialize it.
+#. Install `Windows subsystem for linux and initialize it <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_. 
 	- Please install the Ubuntu 18.04 LTS distro. 
 
 Environment preparation
