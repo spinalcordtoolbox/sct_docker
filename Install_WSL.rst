@@ -1,7 +1,7 @@
 .. -*- coding: utf-8; indent-tabs-mode:nil; -*-
 
 ############################################################
-Spinal Cord Toolbox for Windows : Windows subsyetm for linux
+Spinal Cord Toolbox for Windows : Windows subsystem for linux
 ############################################################
 
 This documentation shows how to install the latest version of SCT. If you want install a different version of SCT please specify the version number you want.
