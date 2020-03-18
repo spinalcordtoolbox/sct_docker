@@ -87,6 +87,7 @@ to complete the installation of these software run:
 
 .. code:: sh
 
+    cd ~
     source .profile
 
 You can now use SCT. To use FSLeyes, run Xming from your computer before entering the fsleyes command.
