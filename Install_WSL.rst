@@ -1,8 +1,8 @@
 .. -*- coding: utf-8; indent-tabs-mode:nil; -*-
 
-##########################
-Spinal Cord Toolbox Docker
-##########################
+############################################################
+Spinal Cord Toolbox for Windows : Windows subsyetm for linux
+############################################################
 
 This documentation shows how to install the latest version of SCT. If you want install a different version of SCT please specify the version number you want.
 
@@ -95,7 +95,11 @@ to complete the installation of these software run:
 
 You can now use SCT. To use FSLeyes, run Xming from your computer before entering the fsleyes command.
 
-Your local C drive is located under '/mnt/c'. You can acces it by running `cd /mnt/c`
+Your local C drive is located under '/mnt/c'. You can access it by running 
+
+.. code:: sh
+
+    cd /mnt/c
 
 
  
