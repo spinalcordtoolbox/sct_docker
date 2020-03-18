@@ -64,12 +64,6 @@ Install SCT:
  
     yes | ./install_sct
 
-To complete the installation you need to run:
-
-.. code-block:: sh
-
-    cd
-    echo 'export SCT_DIR=/home/sct/sct_dev' >> .profile
 
 
 Install FSL
@@ -89,6 +83,7 @@ to complete the installation of these software run:
 
     cd ~
     source .profile
+    source .bashrc
 
 You can now use SCT. To use FSLeyes, run Xming from your computer before entering the fsleyes command.
 
