@@ -58,7 +58,7 @@ To select a [specific release](https://github.com/neuropoly/spinalcordtoolbox/re
 
   git checkout X.Y.Z
 
-To install SCT run:
+Install SCT:
 
 .. code:: sh
  
