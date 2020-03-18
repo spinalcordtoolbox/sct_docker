@@ -18,7 +18,7 @@ Installation
 ************
 
 
-#. Install `Xming <https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/>`_.
+#. Install `Xming <https://sourceforge.net/projects/xming/>`_.
 
 #. Install  `Windows subsystem for linux and initialize it <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_. 
 
