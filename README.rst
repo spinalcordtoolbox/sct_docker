@@ -1,10 +1,17 @@
 .. -*- coding: utf-8; indent-tabs-mode:nil; -*-
 
-##########################
-Spinal Cord Toolbox Docker
-##########################
+######################################################
+⚠️ Disclaimer: This repository is no longer maintained
+######################################################
 
-This documentation shows how to install the latest version of SCT. If you want install a different version of SCT please specify the version number you want.
+To use the newest version of SCT in a Docker container, please visit the installation instructions found on https://spinalcordtoolbox.com/.
+
+-----
+
+Spinal Cord Toolbox Docker
+--------------------------
+
+This documentation shows how to install SCT within a Docker container. If you want install a different version of SCT please specify the version number you want.
 
 .. contents::
 ..
